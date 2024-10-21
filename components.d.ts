@@ -11,6 +11,7 @@ declare module 'vue' {
     DialogMap: typeof import('./src/components/Dialog/DialogMap.vue')['default']
     Header: typeof import('./src/components/Header/Header.vue')['default']
     IndicatorMenu: typeof import('./src/components/Indicator/IndicatorMenu.vue')['default']
+    Indicators: typeof import('./src/components/Dialog/composables/indicators.vue')['default']
     Map: typeof import('./src/components/Map/Map.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

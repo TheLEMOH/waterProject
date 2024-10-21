@@ -3,11 +3,13 @@ import OSM from "ol/source/OSM.js";
 import TileLayer from "ol/layer/Tile.js";
 import View from "ol/View.js";
 import { fromLonLat } from "ol/proj";
-
+import VectorLayer from "ol/layer/Vector";
 import dataset from "../../../datasets/db_c.json";
-import BaseClassLayer from "@/map/map";
+import BaseClassLayer from "@/scripts/map/map";
 
 import { inject, onMounted, ref, watch } from "vue";
+import VectorSource from "ol/source/Vector";
+import { MapBrowserEvent } from "ol";
 
 export default function useMap(settings: { target: string }) {
   const { selectedPoint } = inject<any>("selectedPoint");
@@ -18,12 +20,12 @@ export default function useMap(settings: { target: string }) {
   const dialog = ref(false);
   const selectedPointOnMap = ref(null);
 
-  const layers: any = [];
+  const layers: VectorLayer<VectorSource<never>, never>[] = [];
 
   for (let i = 2010; i <= 2022; i++) {
     for (let j = 0; j < indicators.length; j++) {
       layers.push(
-        new BaseClassLayer({
+        new BaseClassLayer<chemistryArray>({
           name: `chemistry ${i} ${indicators[j]}`,
         }).CreateLayer(dataset, i, indicators[j])
       );
@@ -48,9 +50,9 @@ export default function useMap(settings: { target: string }) {
       view: view,
     });
 
-    map.value.on("click", (event: any) => {
+    map.value.on("click", (event: MapBrowserEvent<UIEvent>) => {
       const features = map.value.getFeaturesAtPixel(event.pixel, {
-        hitTolerance: 4,
+        hitTolerance: 2,
       });
 
       const feature = features[0];
@@ -69,8 +71,8 @@ export default function useMap(settings: { target: string }) {
       });
     });
 
-    watch(selectedYear, (value) => {
-      layers.forEach((element: any) => {
+    watch(selectedYear, (value: string) => {
+      layers.forEach((element) => {
         if (
           element.get("year") == value &&
           element.get("indicator") == selectedIndicator.value
@@ -82,8 +84,8 @@ export default function useMap(settings: { target: string }) {
       });
     });
 
-    watch(selectedIndicator, (value) => {
-      layers.forEach((element: any) => {
+    watch(selectedIndicator, (value: string) => {
+      layers.forEach((element) => {
         if (
           element.get("year") == selectedYear.value &&
           element.get("indicator") == value

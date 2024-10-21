@@ -4,12 +4,12 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 interface Props {
-  title?: string;
+  title?: string | null;
   showClose?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: "",
+  title: null,
   showClose: true,
 });
 

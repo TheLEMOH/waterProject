@@ -8,6 +8,7 @@ import useMap from "./composables/map";
 const { dialog, selectedPointOnMap, closeDialog } = useMap({
   target: "map",
 });
+
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-const drawer = ref(true);
+const drawer = ref<boolean>(true);
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const selectedYear = ref(2010);
+const selectedYear = ref<number>(2010);
 
 const emits = defineEmits(["update"]);
 </script>

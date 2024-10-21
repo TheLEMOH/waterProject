@@ -4,21 +4,21 @@ import Feature from "ol/Feature.js";
 import Point from "ol/geom/Point.js";
 import { fromLonLat } from "ol/proj";
 import { Style, Fill, Circle, Text } from "ol/style.js";
-import group from "@/group/group";
+import group from "@/types/group";
 
-export default class BaseClassLayer {
+export default class BaseClassLayer<T> {
   name: string;
 
   constructor(settings: { name: string }) {
     this.name = settings.name;
   }
 
-  CreateFeatures = (items: any, year: number, indicator: string) => {
+  CreateFeatures = (items: T, year: number, indicator: string) => {
     const copy = JSON.parse(JSON.stringify(items));
 
-    const features = copy.map((item: any) => {
-      const qualityType: string = item.data[year].qualityType || 1;
-      const value: number = item.data[year][indicator] || 0;
+    const features = copy.map((item: chemistryPoint) => {
+      const qualityType = item.data[year].qualityType || "1";
+      const value = item.data[year][indicator] || 0;
 
       const color = group[qualityType] || "#fff";
 
@@ -28,7 +28,7 @@ export default class BaseClassLayer {
 
       const image = new Circle({
         fill,
-        radius: 20 + 3 * value * 0.5,
+        radius: 20 + 3 * +value * 0.5,
       });
 
       const iconFeature = new Feature({
@@ -36,7 +36,7 @@ export default class BaseClassLayer {
         data: item.data,
         year: year,
         name: item.samplingLocation,
-        zIndex: Math.round(value),
+        zIndex: Math.round(+value),
       });
 
       const text = new Text({
@@ -47,7 +47,7 @@ export default class BaseClassLayer {
       const style = new Style({
         image,
         text,
-        zIndex: Math.round(value),
+        zIndex: Math.round(+value),
       });
 
       iconFeature.setStyle(style);
@@ -63,17 +63,10 @@ export default class BaseClassLayer {
       features,
     });
 
-    /* 
-    const clusterSource = new Cluster({
-      distance: 10,
-      minDistance: 10,
-      source: vector,
-    }); */
-
     return vector;
   }
 
-  CreateLayer(items: any, year: number, indicator: string) {
+  CreateLayer(items: T, year: number, indicator: string) {
     const features = this.CreateFeatures(items, year, indicator);
     const source = this.CreateSource(features);
 

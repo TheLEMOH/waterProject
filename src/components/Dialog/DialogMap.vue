@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import Chart from "../Chart/Chart.vue";
-import chartModule from "@/chart/chart";
-import lineLayout from "@/chart/lineLayout";
-import group from "@/group/group";
-import { computed, ref } from "vue";
+import lineLayout from "@/scripts/chart/lineLayout";
+import group from "@/types/group";
+import { ref } from "vue";
+import useItems from "./composables/items";
+import useIndicators from "./composables/indicators";
 
-interface Props {
-  dialog?: boolean;
-  selectedPointOnMap?: any;
-}
+import { Props } from "./types/props";
+import useSeries from "./composables/series";
+import useDisabled from "./composables/disabled";
 
 const props = withDefaults(defineProps<Props>(), {
   dialog: false,
@@ -20,70 +20,26 @@ const emits = defineEmits(["closeDialog"]);
 const selectedIndicator = ref("ХПК");
 const selectedRadio = ref("radio-1");
 
-const disableSelect = computed(() => {
-  return selectedRadio.value == "radio-1" ? false : true;
-});
+const { items } = useItems(props);
+const { indicators } = useIndicators(items);
+const { disableSelect } = useDisabled(selectedRadio);
 
-const items = computed(() => {
-  if (props.selectedPointOnMap) {
-    const data = props.selectedPointOnMap.get("data");
-
-    const newItems = [];
-
-    for (let i in data) {
-      newItems.push({ year: i, ...data[i] });
-    }
-
-    return newItems;
-  } else {
-    return [];
-  }
-});
-
-const indicators = computed(() => {
-  if (items.value.length == 0) {
-    return [];
-  }
-
-  const keys = Object.keys(items.value[0]);
-
-  keys.splice(0, 2);
-
-  return keys;
-});
-
-const series = computed(() => {
-  if (!selectedIndicator.value) return [];
-
-  if (selectedRadio.value == "radio-1") {
-    return [
-      chartModule.lineChart(
-        items.value,
-        "year",
-        selectedIndicator.value,
-        "qualityType",
-        group
-      ),
-    ];
-  } else {
-    return indicators.value.map((key) => {
-      return chartModule.lineChart(
-        items.value,
-        "year",
-        key,
-        "qualityType",
-        group
-      );
-    });
-  }
-});
+const { series } = useSeries(
+  items,
+  selectedIndicator,
+  selectedRadio,
+  indicators,
+  group
+);
 </script>
 
 <template>
   <v-dialog :model-value="props.dialog" fullscreen>
     <v-card>
       <v-toolbar>
-        <v-toolbar-title>{{ selectedPointOnMap.get("name") }}</v-toolbar-title>
+        <v-toolbar-title>
+          {{ selectedPointOnMap ? selectedPointOnMap.get("name") : null }}
+        </v-toolbar-title>
 
         <v-spacer></v-spacer>
 

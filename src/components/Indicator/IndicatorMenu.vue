@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Props {
-  indicators?: Array<string> | null;
+  indicators?: Indicators | null;
   selectedIndicator?: string | null;
 }
 

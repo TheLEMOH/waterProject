@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from "vue";
-
-const Map = defineAsyncComponent(() => import("@/components/Map/Map.vue"));
-const Sidebar = defineAsyncComponent(
-  () => import("@/components/Sidebar/Sidebar.vue")
-);
-const Slider = defineAsyncComponent(
-  () => import("@/components/Slider/Slider.vue")
-);
-const IndicatorMenu = defineAsyncComponent(
-  () => import("@/components/Indicator/IndicatorMenu.vue")
-);
+import Map from "@/components/Map/Map.vue";
+import Slider from "@/components/Slider/Slider.vue";
+import Sidebar from "@/components/Sidebar/Sidebar.vue";
+import IndicatorMenu from "@/components/Indicator/IndicatorMenu.vue";
 
 import chemistry from "@/datasets/db_c.json";
 import { provide, ref } from "vue";
 
-const selectedPoint = ref(null);
-const selectedIndicator = ref("ХПК");
-const selectedYear = ref(2010);
+const selectedPoint = ref<chemistryPoint | null>(null);
+const selectedIndicator = ref<string>("ХПК");
+const selectedYear = ref<number>(2010);
 
-const indicators = Object.keys(chemistry[0].data[2010]);
+const indicators: Indicators = Object.keys(chemistry[0].data[2010]);
 indicators.splice(0, 1);
 
 const setSelectedPoint = (point: any) => {

@@ -1,5 +1,6 @@
 interface year {
-  qualityType: string | null;
+  [key: string]: string | number | null;
+  qualityType: string | number | null;
   ХПК: number | null;
   БПК5: number | null;
   "N NH4+": number | null;
@@ -22,11 +23,14 @@ interface data {
   [key: string]: year;
 }
 
+/* type Data = Record<string, year>; */
+
 interface chemistryPoint {
   id: string | number;
   samplingLocation: string;
   position: Array<number>;
   description: string;
+  data: data;
 }
 
 interface chemistryArray extends Array<chemistryPoint> {}

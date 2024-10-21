@@ -1,5 +1,7 @@
+import { Group } from "@/types/group";
+
 class CreateChartSeries {
-  lineChart(rawData: any, x: string, y: string, group: any, groups: any) {
+  lineChart(rawData: any, x: string, y: string, group: string, groups: Group) {
     const data: number[][] = rawData.map((element: any) => {
       const color = groups[element[group]];
 

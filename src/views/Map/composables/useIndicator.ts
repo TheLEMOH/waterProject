@@ -5,7 +5,7 @@ interface List {
 }
 
 export default function useData(datasets: any, nameRoute: ComputedRef) {
-  const selectedIndicator = ref<string | null>(null);
+  const selectedIndicator = ref<string | null>("qualityType");
 
   const indicatorsChemisry: Indicators = Object.keys(datasets[0].data[2010]);
   const indicatorsBiology: Indicators = Object.keys(datasets[0].data[2010]);

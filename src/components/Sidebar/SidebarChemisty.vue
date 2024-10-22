@@ -14,8 +14,8 @@ const { setSelectedPoint } = inject<any>("selectedPoint");
 
       <v-list lines="three">
         <v-list-item
-          v-for="item in datasetChemistry"
-          :title="item.samplingLocation"
+          v-for="(item, index) in datasetChemistry"
+          :title="`${index + 1}) ${item.samplingLocation}`"
           :value="item.id"
           @click="setSelectedPoint(item)"
         >

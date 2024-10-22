@@ -18,9 +18,18 @@ export default class BaseClassLayer<T> {
 
     const features = copy.map((item: chemistryPoint) => {
       const qualityType = item.data[year].qualityType || "1";
+
       const value = item.data[year][indicator] || 0;
 
-      const color = group[qualityType] || "#fff";
+      let color = "#EFA94A";
+
+      let radius = 20;
+
+      if (indicator == "qualityType") {
+        color = group[qualityType] || "#000";
+      } else {
+        radius = 20 + 3 * +value * 0.5;
+      }
 
       const fill = new Fill({
         color: color,
@@ -28,7 +37,7 @@ export default class BaseClassLayer<T> {
 
       const image = new Circle({
         fill,
-        radius: 20 + 3 * +value * 0.5,
+        radius,
       });
 
       const iconFeature = new Feature({
@@ -66,7 +75,7 @@ export default class BaseClassLayer<T> {
     return vector;
   }
 
-  CreateLayer(items: T, year: number, indicator: string) {
+  CreateLayer(items: T, year: number, indicator: string, name: string) {
     const features = this.CreateFeatures(items, year, indicator);
     const source = this.CreateSource(features);
 
@@ -78,6 +87,7 @@ export default class BaseClassLayer<T> {
 
     vectorLayer.set("year", year);
     vectorLayer.set("indicator", indicator);
+    vectorLayer.set("name", name);
 
     return vectorLayer;
   }

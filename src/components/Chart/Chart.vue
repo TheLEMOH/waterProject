@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 
+import { SeriesOption } from "echarts";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { BarChart } from "echarts/charts";
@@ -25,7 +26,7 @@ import VChart from "vue-echarts";
 
 const props = defineProps<{
   options?: Object;
-  series?: any[];
+  series?: SeriesOption[];
 }>();
 
 const option = ref({

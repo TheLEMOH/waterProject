@@ -10,8 +10,8 @@ class Layers {
       for (let j = 0; j < indicators.length; j++) {
         layers.push(
           new BaseClassLayer<chemistryArray>({
-            name: `chemistry`,
-          }).CreateLayer(dataset, i, indicators[j])
+            name: `chemistry ${i} ${indicators[j]}`,
+          }).CreateLayer(dataset, i, indicators[j], "chemistry")
         );
       }
     }

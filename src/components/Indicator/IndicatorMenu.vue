@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import chemistry from "@/dictonary/chemistry";
+
 interface Props {
   indicators?: Indicators | null;
   selectedIndicator?: string | null;
@@ -17,6 +19,7 @@ const emits = defineEmits(["select"]);
     <div class="indicator-item" v-for="indicator in props.indicators">
       <v-btn
         block
+        class="text-subtitle-2"
         :ripple="false"
         size="small"
         :key="indicator"
@@ -25,7 +28,7 @@ const emits = defineEmits(["select"]);
         "
         @click="emits('select', indicator)"
       >
-        {{ indicator }}
+        {{ chemistry[indicator] }}
       </v-btn>
     </div>
   </div>
@@ -33,7 +36,7 @@ const emits = defineEmits(["select"]);
 
 <style>
 .indicator-menu {
-  width: 130px;
+  width: 140px;
   height: auto;
   position: absolute;
   display: flex;

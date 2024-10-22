@@ -14,18 +14,28 @@ export default function useMap(settings: { target: string }) {
   const { selectedPoint } = inject<any>("selectedPoint");
   const { selectedIndicator } = inject<any>("indicator");
   const { selectedYear } = inject<any>("year");
-  const nameRoute: ComputedRef<string> = inject<any>("nameRoute");
+  const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
 
   const layers: VectorLayer<VectorSource<never>, never>[] =
     inject<any>("layers");
+
+  layers.forEach((element) => {
+    if (
+      element.get("name") == nameRoute.value &&
+      element.get("year") == selectedYear.value &&
+      element.get("indicator") == selectedIndicator.value
+    ) {
+      element.setVisible(true);
+    }
+  });
 
   const map = ref();
   const dialog = ref(false);
   const selectedPointOnMap = ref(null);
 
   const view = new View({
-    center: [0, 0],
-    zoom: 0,
+    center: fromLonLat([92, 60]),
+    zoom: 4,
   });
 
   const osm = new TileLayer({
@@ -60,14 +70,13 @@ export default function useMap(settings: { target: string }) {
       });
     });
 
-    watch(nameRoute, (value: string) => {
+    watch(nameRoute, (value: ComputedRef<string | symbol>) => {
       layers.forEach((element) => {
         if (
           element.get("name") == value &&
           element.get("year") == selectedYear.value &&
           element.get("indicator") == selectedIndicator.value
         ) {
-          console.log(value, selectedYear.value, selectedIndicator.value);
           element.setVisible(true);
         } else {
           element.setVisible(false);

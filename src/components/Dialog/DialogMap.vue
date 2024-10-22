@@ -20,12 +20,7 @@ const selectedIndicator = ref("ХПК");
 
 const { items } = useItems(props);
 const { indicators } = useIndicators(items);
-
-const { series } = useSeries({
-  items,
-  selectedIndicator,
-  group,
-});
+const { series } = useSeries({ items, selectedIndicator, group });
 </script>
 
 <template>
@@ -43,12 +38,17 @@ const { series } = useSeries({
 
       <v-list subheader>
         <v-list-subheader>Табличные данные</v-list-subheader>
+
         <v-data-table
+          :density="'compact'"
           :items="items"
           hide-default-footer
           :items-per-page="100"
-        ></v-data-table>
+        >
+        </v-data-table>
+
         <v-list-subheader>График</v-list-subheader>
+
         <div class="chart-settings">
           <v-select
             label="Выберите показатель"
@@ -58,6 +58,7 @@ const { series } = useSeries({
           >
           </v-select>
         </div>
+
         <Chart :series="series" :options="lineLayout"></Chart>
       </v-list>
     </v-card>

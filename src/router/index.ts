@@ -1,12 +1,12 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Map from "@/views/Map.vue";
+import Map from "@/views/Map/Map.vue";
 import MapLayout from "@/layouts/MapLayout.vue";
 
 const routes = [
   {
     path: "",
     component: Map,
-    name: "Map",
+    name: "map",
     meta: { layout: MapLayout },
     children: [
       {

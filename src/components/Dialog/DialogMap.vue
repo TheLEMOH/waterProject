@@ -8,7 +8,6 @@ import useIndicators from "./composables/indicators";
 
 import { Props } from "./types/props";
 import useSeries from "./composables/series";
-import useDisabled from "./composables/disabled";
 
 const props = withDefaults(defineProps<Props>(), {
   dialog: false,
@@ -18,19 +17,15 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits(["closeDialog"]);
 
 const selectedIndicator = ref("ХПК");
-const selectedRadio = ref("radio-1");
 
 const { items } = useItems(props);
 const { indicators } = useIndicators(items);
-const { disableSelect } = useDisabled(selectedRadio);
 
-const { series } = useSeries(
+const { series } = useSeries({
   items,
   selectedIndicator,
-  selectedRadio,
-  indicators,
-  group
-);
+  group,
+});
 </script>
 
 <template>
@@ -60,19 +55,10 @@ const { series } = useSeries(
             v-model="selectedIndicator"
             :items="indicators"
             style="max-width: 350px"
-            :disabled="disableSelect"
           >
           </v-select>
-          <v-radio-group v-model="selectedRadio" inline>
-            <v-radio label="Одиночный" value="radio-1"></v-radio>
-            <v-radio label="Множественный" value="radio-2"></v-radio>
-          </v-radio-group>
         </div>
-        <Chart
-          :series="series"
-          :options="lineLayout"
-          :key="selectedRadio"
-        ></Chart>
+        <Chart :series="series" :options="lineLayout"></Chart>
       </v-list>
     </v-card>
   </v-dialog>

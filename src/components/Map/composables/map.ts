@@ -4,35 +4,24 @@ import TileLayer from "ol/layer/Tile.js";
 import View from "ol/View.js";
 import { fromLonLat } from "ol/proj";
 import VectorLayer from "ol/layer/Vector";
-import dataset from "../../../datasets/db_c.json";
-import BaseClassLayer from "@/scripts/map/map";
-
-import { inject, onMounted, ref, watch } from "vue";
 import VectorSource from "ol/source/Vector";
+
+import { ComputedRef, inject, onMounted, ref, watch } from "vue";
+
 import { MapBrowserEvent } from "ol";
 
 export default function useMap(settings: { target: string }) {
   const { selectedPoint } = inject<any>("selectedPoint");
-  const { indicators, selectedIndicator } = inject<any>("indicator");
+  const { selectedIndicator } = inject<any>("indicator");
   const { selectedYear } = inject<any>("year");
+  const nameRoute: ComputedRef<string> = inject<any>("nameRoute");
+
+  const layers: VectorLayer<VectorSource<never>, never>[] =
+    inject<any>("layers");
 
   const map = ref();
   const dialog = ref(false);
   const selectedPointOnMap = ref(null);
-
-  const layers: VectorLayer<VectorSource<never>, never>[] = [];
-
-  for (let i = 2010; i <= 2022; i++) {
-    for (let j = 0; j < indicators.length; j++) {
-      layers.push(
-        new BaseClassLayer<chemistryArray>({
-          name: `chemistry ${i} ${indicators[j]}`,
-        }).CreateLayer(dataset, i, indicators[j])
-      );
-    }
-  }
-
-  layers[0].setVisible(true);
 
   const view = new View({
     center: [0, 0],
@@ -68,6 +57,21 @@ export default function useMap(settings: { target: string }) {
         center: fromLonLat(value.position),
         zoom: 15,
         duration: 1000,
+      });
+    });
+
+    watch(nameRoute, (value: string) => {
+      layers.forEach((element) => {
+        if (
+          element.get("name") == value &&
+          element.get("year") == selectedYear.value &&
+          element.get("indicator") == selectedIndicator.value
+        ) {
+          console.log(value, selectedYear.value, selectedIndicator.value);
+          element.setVisible(true);
+        } else {
+          element.setVisible(false);
+        }
       });
     });
 

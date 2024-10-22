@@ -19,6 +19,7 @@ const emits = defineEmits(["select"]);
         block
         :ripple="false"
         size="small"
+        :key="indicator"
         :color="
           indicator == props.selectedIndicator ? 'indigo-darken-3' : 'white'
         "

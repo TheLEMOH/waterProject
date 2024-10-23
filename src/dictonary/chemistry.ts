@@ -6,7 +6,7 @@ const chemistry: Dictonary = {
   qualityType: "УКИЗВ",
   ХПК: "ХПК",
   БПК5: "БПК5",
-  "N NH4+": "N NH4+",
+  N_NH4: "N NH4+",
   N_NO2: "N NO2",
   Fe: "Fe",
   Cu: "Cu",

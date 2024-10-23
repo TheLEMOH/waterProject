@@ -1,16 +1,37 @@
 <script setup lang="ts">
 import group from "@/types/group";
+
+export interface Degree {
+  [key: string]: string;
+}
+
+const degree: Degree = {
+  "1": "слабо загрязненная",
+  "2": "загрязненная",
+  "3": "загрязненная",
+  "3а": "очень загрязненная",
+  "3б": "очень загрязненная",
+  "4": "грязная",
+  "4а": "грязная",
+  "4в": "грязная",
+};
+
+for (let i in group) {
+  console.log(i);
+}
 </script>
 
 <template>
   <div class="legend">
     <div
       class="legend-item elevation-2"
-      v-for="(item, index) in group"
+      v-for="[item, key] in group"
       :title="item"
+      :key="key"
     >
-      {{ index }}
-      <div class="legend-item-color" :style="{ background: item }"></div>
+      {{ item }} -
+      {{ degree[item] }}
+      <div class="legend-item-color" :style="{ background: key }"></div>
     </div>
   </div>
 </template>
@@ -23,7 +44,7 @@ import group from "@/types/group";
   z-index: 100;
   display: flex;
   flex-direction: column;
-  width: 80px;
+  width: 250px;
   gap: 3px;
 }
 

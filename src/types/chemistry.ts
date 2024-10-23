@@ -3,7 +3,7 @@ interface year {
   qualityType: string | number | null;
   ХПК: number | null;
   БПК5: number | null;
-  "N NH4+": number | null;
+  N_NH4: number | null;
   N_NO2: number | null;
   Fe: number | null;
   Cu: number | null;

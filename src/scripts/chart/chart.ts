@@ -1,4 +1,3 @@
-import { Group } from "@/types/group";
 import { SeriesOption } from "echarts";
 
 class CreateChartSeries {
@@ -6,13 +5,9 @@ class CreateChartSeries {
     rawData: any,
     x: string,
     y: string,
-    group: string,
-    groups: Group
   ): SeriesOption {
     const data: number[][] = rawData.map((element: any) => {
-      const color = groups[element[group]];
-
-      return { value: [element[x], element[y]], itemStyle: { color } };
+      return { value: [element[x], element[y]] };
     });
 
     return {

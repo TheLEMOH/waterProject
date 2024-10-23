@@ -8,6 +8,12 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emits = defineEmits(["update"]);
+
+const ticks: Array<number> = [];
+
+for (let i = 2010; i <= 2022; i++) {
+  ticks.push(i);
+}
 </script>
 
 <template>
@@ -16,11 +22,13 @@ const emits = defineEmits(["update"]);
       Многолетняя динамика
     </div>
     <v-slider
-      v-model:model-value="props.selectedYear"
+      :value="props.selectedYear"
+      :color="'indigo-darken-3'"
       :min="2010"
       :max="2022"
+      :ticks="ticks"
+      tick-size="4"
       :step="1"
-      thumb-label="always"
       show-ticks="always"
       hide-details
       @update:model-value="emits('update', $event)"
@@ -32,6 +40,8 @@ const emits = defineEmits(["update"]);
 .slider-wrapper {
   position: absolute;
   display: flex;
+  align-items: center;
+  background: rgba(250, 250, 250, 0.5);
   gap: 1rem;
   width: calc(100% - var(--v-layout-right) - 130px);
   padding: 0 1rem 1rem 1rem;

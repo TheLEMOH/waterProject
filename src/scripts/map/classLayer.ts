@@ -26,7 +26,7 @@ export default class BaseClassLayer<T> {
       let radius = 20;
 
       if (indicator == "qualityType") {
-        color = group[qualityType] || "#000";
+        color = group.get(qualityType.toString()) || "#000";
       } else {
         radius = 20 + 3 * +value * 0.5;
       }

@@ -19,7 +19,8 @@ sections.forEach((section) => {
 
   items.forEach((item, index) => {
     listItems.push({
-      title: `${index + 1}) ${item.samplingLocation}`,
+      title: `${item.station}) ${item.samplingLocation}`,
+      subtitle: `Км от устья ${item.km}`,
       value: item.id,
     });
   });

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import Chart from "../Chart/Chart.vue";
 import lineLayout from "@/scripts/chart/lineLayout";
-import chemistry from "@/dictonary/chemistry";
-import { ref, computed } from "vue";
-import useItems from "./composables/items";
+import { ref, ComputedRef, inject } from "vue";
+import TableChemistry from "./TableChemistry.vue";
+import TableBiology from "./TableBiology.vue";
+import useItems from "./composables/chemistryItems";
 import useIndicators from "./composables/indicators";
 
 import { Props } from "./types/props";
@@ -22,22 +23,12 @@ const { items } = useItems(props);
 const { indicators } = useIndicators(items);
 const { series } = useSeries({ items, selectedIndicator });
 
-const headers = computed(() => {
-  const res = [];
+const tables: { [key: string | symbol]: any } = {
+  chemistry: TableChemistry,
+  biology: TableBiology,
+};
 
-  res.push({
-    title: "Год",
-    value: "year",
-    sortable: true,
-    width: "50px",
-    fixed: false,
-  });
-  for (let i in chemistry) {
-    res.push({ title: chemistry[i], value: i, sortable: true, width: "50px" });
-  }
-
-  return res;
-});
+const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
 </script>
 
 <template>
@@ -56,15 +47,10 @@ const headers = computed(() => {
       <v-list subheader>
         <v-list-subheader>Табличные данные</v-list-subheader>
 
-        <v-data-table
-          :density="'compact'"
-          :headers="headers"
-          :items="items"
-          hide-default-footer
-          :items-per-page="100"
-          style="padding: 0 6px 0 6px"
-        >
-        </v-data-table>
+        <component
+          :is="tables[nameRoute]"
+          :selectedPointOnMap="selectedPointOnMap"
+        ></component>
 
         <v-list-subheader>График</v-list-subheader>
 

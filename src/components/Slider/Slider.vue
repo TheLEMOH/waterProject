@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+
 interface Props {
   selectedYear: number;
 }
@@ -9,15 +11,48 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits(["update"]);
 
+const sliderWrap = ref<any>(null);
+
 const ticks: Array<number> = [];
+let width = ref<number>(0);
 
 for (let i = 2010; i <= 2022; i++) {
   ticks.push(i);
 }
+
+const resizeSlider = () => {
+  width.value = sliderWrap.value?.clientWidth!;
+};
+
+let sliderObserver = new ResizeObserver(resizeSlider);
+
+onMounted(() => {
+  sliderObserver.observe(sliderWrap.value);
+});
+
+onBeforeUnmount(() => {
+  sliderObserver.unobserve(sliderWrap.value);
+});
+
+const tick = computed(() => {
+  if (width.value < 1000) {
+    return false;
+  }
+
+  return "always";
+});
+
+const thumb = computed(() => {
+  if (width.value < 1000) {
+    return "always";
+  }
+
+  return false;
+});
 </script>
 
 <template>
-  <div class="slider-wrapper">
+  <div class="slider-wrapper" ref="sliderWrap">
     <div class="text-subtitle-2 text-slider elevation-2">
       Многолетняя динамика
     </div>
@@ -29,7 +64,8 @@ for (let i = 2010; i <= 2022; i++) {
       :ticks="ticks"
       tick-size="4"
       :step="1"
-      show-ticks="always"
+      :thumb-label="thumb"
+      :show-ticks="tick"
       hide-details
       @update:model-value="emits('update', $event)"
     ></v-slider>
@@ -44,6 +80,7 @@ for (let i = 2010; i <= 2022; i++) {
   background: rgba(250, 250, 250, 0.5);
   gap: 1rem;
   width: calc(100% - var(--v-layout-right) - 130px);
+  height: 50px;
   padding: 0 1rem 1rem 1rem;
   z-index: 100;
   bottom: 0;

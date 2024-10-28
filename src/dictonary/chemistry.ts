@@ -1,7 +1,3 @@
-interface Dictonary {
-  [key: string]: string;
-}
-
 const chemistry: Dictonary = {
   qualityType: "УКИЗВ",
   ХПК: "ХПК",

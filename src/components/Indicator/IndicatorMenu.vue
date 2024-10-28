@@ -1,15 +1,26 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
 import chemistry from "@/dictonary/chemistry";
+import biology from "@/dictonary/biology";
 
 interface Props {
   indicators?: Indicators | null;
+  selectedProject?: string | symbol;
   selectedIndicator?: string | null;
+}
+
+interface Dictonaries {
+  [key: string | symbol]: Dictonary;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   indicators: null,
+  selectedProject: "chemistry",
   selectedIndicator: null,
 });
+
+const dictonaries = ref<Dictonaries>({ chemistry, biology });
 
 const emits = defineEmits(["select"]);
 </script>
@@ -28,7 +39,7 @@ const emits = defineEmits(["select"]);
         "
         @click="emits('select', indicator)"
       >
-        {{ chemistry[indicator] }}
+        {{ dictonaries[selectedProject][indicator] }}
       </v-btn>
     </div>
   </div>

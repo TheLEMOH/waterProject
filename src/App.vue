@@ -10,3 +10,9 @@ const layout = computed(() => route.meta.layout);
 <template>
   <component :is="layout"></component>
 </template>
+
+<style>
+html {
+  overflow-y: auto;
+}
+</style>

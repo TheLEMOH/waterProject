@@ -12,6 +12,7 @@ declare module 'vue' {
     Header: typeof import('./src/components/Header/Header.vue')['default']
     IndicatorMenu: typeof import('./src/components/Indicator/IndicatorMenu.vue')['default']
     Legend: typeof import('./src/components/Legend/Legend.vue')['default']
+    LegendBiology: typeof import('./src/components/Legend/LegendBiology.vue')['default']
     Map: typeof import('./src/components/Map/Map.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -22,5 +23,7 @@ declare module 'vue' {
     SidebarMenu: typeof import('./src/components/Sidebar/SidebarMenu.vue')['default']
     SidebarPage: typeof import('./src/components/Sidebar/SidebarPage.vue')['default']
     Slider: typeof import('./src/components/Slider/Slider.vue')['default']
+    TableBiology: typeof import('./src/components/Dialog/TableBiology.vue')['default']
+    TableChemistry: typeof import('./src/components/Dialog/TableChemistry.vue')['default']
   }
 }

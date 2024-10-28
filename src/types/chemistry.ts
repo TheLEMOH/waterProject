@@ -19,7 +19,7 @@ interface year {
   "Y-ГХЦГ": number | null;
 }
 
-interface data {
+interface dataChemistry {
   [key: string]: year;
 }
 
@@ -30,7 +30,7 @@ interface chemistryPoint {
   samplingLocation: string;
   position: Array<number>;
   description: string;
-  data: data;
+  data: dataChemistry;
 }
 
 interface chemistryArray extends Array<chemistryPoint> {}

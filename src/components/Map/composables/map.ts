@@ -88,6 +88,7 @@ export default function useMap(settings: { target: string }) {
       layers.forEach((element) => {
         if (
           element.get("year") == value &&
+          element.get("name") == nameRoute.value &&
           element.get("indicator") == selectedIndicator.value
         ) {
           element.setVisible(true);
@@ -101,6 +102,7 @@ export default function useMap(settings: { target: string }) {
       layers.forEach((element) => {
         if (
           element.get("year") == selectedYear.value &&
+          element.get("name") == nameRoute.value &&
           element.get("indicator") == value
         ) {
           element.setVisible(true);

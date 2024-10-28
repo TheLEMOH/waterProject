@@ -3,11 +3,18 @@ import Map from "@/components/Map/Map.vue";
 import Slider from "@/components/Slider/Slider.vue";
 import Sidebar from "@/components/Sidebar/Sidebar.vue";
 import IndicatorMenu from "@/components/Indicator/IndicatorMenu.vue";
-import LayerModule from "@/scripts/map/map";
+import Layers from "@/scripts/map/map";
+
 import Legend from "@/components/Legend/Legend.vue";
+import LegendBiology from "@/components/Legend/LegendBiology.vue";
 import chemistry from "@/datasets/db_c.json";
+import biology from "@/datasets/db_b.json";
 
 import { provide, ComputedRef } from "vue";
+import {
+  CreateLayersChemistry,
+  CreateLayersBiology,
+} from "@/scripts/map/generatorLayers";
 
 import useIndicators from "@/views/Map/composables/useIndicator";
 import usePoint from "@/views/Map/composables/usePoint";
@@ -16,16 +23,26 @@ import useNameRoute from "./composables/useNameRoute";
 
 const { nameRoute } = useNameRoute();
 const { selectedPoint, setSelectedPoint } = usePoint();
-const { selectedYear } = useYear();
+const { selectedYear } = useYear(nameRoute);
 const { indicators, list, selectedIndicator } = useIndicators(
-  chemistry,
+  [chemistry, biology],
   nameRoute
 );
 
-const layersChemistry = LayerModule.CreateLayers(chemistry, list["chemistry"]);
-/* const layersBiologi = LayerModule.CreateLayers(chemistry, list["chemistry"]); */
+const LayerModuleChemistry = new Layers({ generator: CreateLayersChemistry });
+const LayerModuleBiology = new Layers({ generator: CreateLayersBiology });
 
-const layers = [...layersChemistry];
+const layersChemistry = LayerModuleChemistry.CreateLayers<chemistryArray>({
+  dataset: chemistry,
+  indicators: list["chemistry"],
+});
+
+const layersBiologi = LayerModuleBiology.CreateLayers<biologyArray>({
+  dataset: biology,
+  indicators: list["biology"],
+});
+
+const layers = [...layersChemistry, ...layersBiologi];
 
 provide("selectedPoint", { selectedPoint, setSelectedPoint });
 provide("indicator", { indicators, selectedIndicator });
@@ -42,16 +59,26 @@ provide<ComputedRef<string | symbol>>("nameRoute", nameRoute);
   </Transition>
 
   <Transition name="fade" mode="out-in">
+    <LegendBiology
+      v-if="
+        (selectedIndicator == 'ip' || selectedIndicator == 'qualityType') &&
+        nameRoute == 'biology'
+      "
+    ></LegendBiology>
+  </Transition>
+
+  <Transition name="fade" mode="out-in">
     <Slider
       :selectedYear="selectedYear"
       @update="selectedYear = $event"
-      v-if="indicators"
+      v-if="indicators && nameRoute == 'chemistry'"
     ></Slider>
   </Transition>
 
   <Transition name="fade" mode="out-in">
     <IndicatorMenu
       :indicators="indicators"
+      :selectedProject="nameRoute"
       :selectedIndicator="selectedIndicator"
       @select="selectedIndicator = $event"
       v-if="indicators"

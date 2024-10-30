@@ -46,4 +46,9 @@ const back = () => {
   justify-content: space-between;
   padding: 8px;
 }
+
+.sidebar-divider {
+  color: #000 !important;
+  opacity: 0.5;
+}
 </style>

@@ -13,12 +13,7 @@ const emits = defineEmits(["update"]);
 
 const sliderWrap = ref<any>(null);
 
-const ticks: Array<number> = [];
 let width = ref<number>(0);
-
-for (let i = 2010; i <= 2022; i++) {
-  ticks.push(i);
-}
 
 const resizeSlider = () => {
   width.value = sliderWrap.value?.clientWidth!;
@@ -34,41 +29,50 @@ onBeforeUnmount(() => {
   sliderObserver.unobserve(sliderWrap.value);
 });
 
-const tick = computed(() => {
-  if (width.value < 1000) {
-    return false;
+const ticks = computed(() => {
+  const res = [];
+
+  for (let i = 2010; i <= 2022; i++) {
+    res.push(i);
   }
 
-  return "always";
+  return res;
 });
 
-const thumb = computed(() => {
-  if (width.value < 1000) {
-    return "always";
+const device = computed(() => {
+  if (width.value < 800) {
+    return "mobile";
   }
 
-  return false;
+  return "computer";
 });
 </script>
 
 <template>
   <div class="slider-wrapper" ref="sliderWrap">
-    <div class="text-subtitle-2 text-slider elevation-2">
-      Многолетняя динамика
-    </div>
+    <div class="text-subtitle-2">Многолетняя динамика</div>
     <v-slider
       :value="props.selectedYear"
-      :color="'indigo-darken-3'"
+      style="width: 100%"
+      thumb-color="indigo-darken-1"
+      track-color="indigo-darken-1"
+      track-fill-color="indigo-darken-4"
       :min="2010"
       :max="2022"
       :ticks="ticks"
-      tick-size="4"
+      tick-size="5"
+      :show-ticks="'always'"
       :step="1"
-      :thumb-label="thumb"
-      :show-ticks="tick"
       hide-details
       @update:model-value="emits('update', $event)"
-    ></v-slider>
+    >
+      <template #tick-label="{ tick }">
+        <span v-if="+tick.label! % 2 == 0 && device=='mobile'">{{
+          tick.label
+        }}</span>
+        <span v-if="device == 'computer'">{{ tick.label }}</span>
+      </template>
+    </v-slider>
   </div>
 </template>
 
@@ -76,14 +80,17 @@ const thumb = computed(() => {
 .slider-wrapper {
   position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  background: rgba(250, 250, 250, 0.5);
-  gap: 1rem;
-  width: calc(100% - var(--v-layout-right) - 130px);
-  height: 50px;
+  width: calc(100% - var(--v-layout-right) - 146px);
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.8);
   padding: 0 1rem 1rem 1rem;
   z-index: 100;
-  bottom: 0;
+  margin-left: 6px;
+  padding-top: 6px;
+  bottom: 6px;
+  border-radius: 6px;
 }
 
 .text-slider {

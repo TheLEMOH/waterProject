@@ -8,9 +8,10 @@ const { setSelectedPoint } = inject<any>("selectedPoint");
 </script>
 
 <template>
-  <SidebarPage :title="'Химия'">
+  <SidebarPage :title="'Контрольные створы'">
     <template #body>
-      <v-data-iterator :items="datasetChemistry"> </v-data-iterator>
+      <p class="pl-4 pt-1 opacity-80">Краткое описание</p>
+      <v-divider> </v-divider>
 
       <v-list lines="three">
         <v-list-item

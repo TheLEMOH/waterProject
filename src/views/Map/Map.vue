@@ -54,14 +54,14 @@ provide<ComputedRef<string | symbol>>("nameRoute", nameRoute);
 <template>
   <Transition name="fade" mode="out-in">
     <Legend
-      v-if="selectedIndicator == 'qualityType' && nameRoute == 'chemistry'"
+      v-if="selectedIndicator == 'УКИЗВ' && nameRoute == 'chemistry'"
     ></Legend>
   </Transition>
 
   <Transition name="fade" mode="out-in">
     <LegendBiology
       v-if="
-        (selectedIndicator == 'ip' || selectedIndicator == 'qualityType') &&
+        (selectedIndicator == 'IP' || selectedIndicator == 'qualityType') &&
         nameRoute == 'biology'
       "
     ></LegendBiology>

@@ -6,23 +6,19 @@ export interface Degree {
 }
 
 const degree: Degree = {
-  "1": "слабо загрязненная",
-  "2": "загрязненная",
+  "1": "условно чистая",
+  "2": "слабо загрязненная",
   "3": "загрязненная",
-  "3а": "очень загрязненная",
+  "3а": "загрязненная",
   "3б": "очень загрязненная",
   "4": "грязная",
   "4а": "грязная",
   "4в": "грязная",
 };
-
-for (let i in group) {
-  console.log(i);
-}
 </script>
 
 <template>
-  <div class="legend">
+  <div class="legend-chemistry">
     <div
       class="legend-item elevation-2"
       v-for="[item, key] in group"
@@ -37,10 +33,10 @@ for (let i in group) {
 </template>
 
 <style>
-.legend {
+.legend-chemistry {
   position: absolute;
-  bottom: 55px;
-  left: 1rem;
+  bottom: 90px;
+  left: 6px;
   z-index: 100;
   display: flex;
   flex-direction: column;

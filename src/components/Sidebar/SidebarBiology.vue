@@ -15,17 +15,24 @@ sections.forEach((section) => {
     (itemData) => itemData.section == section
   );
 
-  listItems.push({ type: "subheader", title: section });
+  listItems.push({
+    type: "header",
+    title: section,
+    class: ["sidebar-bold"],
+  });
 
   items.forEach((item, index) => {
     listItems.push({
       title: `${item.station}) ${item.samplingLocation}`,
-      subtitle: `Км от устья ${item.km}`,
+      subtitle: `Км от устья - ${item.km}`,
       value: item.id,
     });
   });
 
-  listItems.push({ type: "divider" });
+  listItems.push({
+    type: "divider",
+    class: ["sidebar-divider"],
+  });
 });
 
 const test = (e: any): void => {
@@ -37,7 +44,16 @@ const test = (e: any): void => {
 <template>
   <SidebarPage :title="'Биология'">
     <template #body>
+      <p class="pl-4 pt-1 opacity-80">Краткое описание</p>
+      <v-divider> </v-divider>
       <v-list :items="listItems" item-props @click:select="test"> </v-list>
     </template>
   </SidebarPage>
 </template>
+
+<style>
+.sidebar-bold .v-list-item-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+</style>

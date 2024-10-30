@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import biology from "@/dictonary/biology";
 import useItems from "./composables/biologyItems";
 import { Feature } from "ol";
-import { computed } from "vue";
+import { computed, inject } from "vue";
 
 const props = withDefaults(
   defineProps<{ selectedPointOnMap: Feature | null }>(),
@@ -11,14 +10,21 @@ const props = withDefaults(
   }
 );
 
+const { indicators } = inject<any>("indicator");
+
 const { items } = useItems(props);
 
 const headers = computed(() => {
-  const res = [];
+  const res: Array<{}> = [];
 
-  for (let i in biology) {
-    res.push({ title: biology[i], value: i, sortable: true, width: "50px" });
-  }
+  indicators.value.forEach((indicator: string) => {
+    res.push({
+      title: indicator,
+      value: indicator,
+      sortable: true,
+      width: "50px",
+    });
+  });
 
   return res;
 });

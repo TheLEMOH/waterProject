@@ -21,7 +21,7 @@ export interface Group {
   ["3б", "#ffff00"],
   ["4", "#ff6600"],
   ["4а", "#ff6600"],
-  ["4в", "#ff6600"],
+  ["4в", "#E53935"],
 ]); 
 
 export default group;

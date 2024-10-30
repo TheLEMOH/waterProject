@@ -52,19 +52,23 @@ const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
           :selectedPointOnMap="selectedPointOnMap"
         ></component>
 
-        <v-list-subheader>График</v-list-subheader>
+        <template v-if="nameRoute == 'chemistry'">
+          <v-list-subheader>График</v-list-subheader>
 
-        <div class="chart-settings">
-          <v-select
-            label="Выберите показатель"
-            v-model="selectedIndicator"
-            :items="indicators"
-            style="max-width: 350px"
-          >
-          </v-select>
-        </div>
+          <div class="chart-settings">
+            <v-select
+              label="Выберите показатель"
+              v-model="selectedIndicator"
+              :items="indicators"
+              :item-value="'value'"
+              :item-title="'label'"
+              style="max-width: 350px"
+            >
+            </v-select>
+          </div>
 
-        <Chart :series="series" :options="lineLayout"></Chart>
+          <Chart :series="series" :options="lineLayout"></Chart>
+        </template>
       </v-list>
     </v-card>
   </v-dialog>

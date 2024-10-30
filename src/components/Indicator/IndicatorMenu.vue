@@ -1,17 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
-import chemistry from "@/dictonary/chemistry";
-import biology from "@/dictonary/biology";
-
 interface Props {
   indicators?: Indicators | null;
   selectedProject?: string | symbol;
   selectedIndicator?: string | null;
-}
-
-interface Dictonaries {
-  [key: string | symbol]: Dictonary;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -20,26 +11,33 @@ const props = withDefaults(defineProps<Props>(), {
   selectedIndicator: null,
 });
 
-const dictonaries = ref<Dictonaries>({ chemistry, biology });
-
 const emits = defineEmits(["select"]);
+
+const color = (indicator: string, index: number) => {
+  if (index == 0 && props.selectedIndicator != indicator)
+    return "orange-lighten-1";
+
+  if (props.selectedIndicator == indicator) {
+    return "indigo-darken-3";
+  }
+
+  return "white";
+};
 </script>
 
 <template>
   <div class="indicator-menu">
-    <div class="indicator-item" v-for="indicator in props.indicators">
+    <div class="indicator-item" v-for="(indicator, index) in props.indicators">
       <v-btn
         block
         class="text-subtitle-2"
         :ripple="false"
         size="small"
         :key="indicator"
-        :color="
-          indicator == props.selectedIndicator ? 'indigo-darken-3' : 'white'
-        "
+        :color="color(indicator, index)"
         @click="emits('select', indicator)"
       >
-        {{ dictonaries[selectedProject][indicator] }}
+        {{ indicator }}
       </v-btn>
     </div>
   </div>

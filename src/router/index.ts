@@ -17,12 +17,41 @@ const routes = [
       {
         path: "/biology",
         name: "biology",
+        meta: { project: "biology" },
+        component: () =>
+          import("@/components/Sidebar/SidebarSubProjectBiology.vue"),
+      },
+      {
+        path: "/biology/samples",
+        name: "biologySamples",
+        meta: { project: "biology" },
         component: () => import("@/components/Sidebar/SidebarBiology.vue"),
+      },
+      {
+        path: "/biology/about",
+        name: "biologyAbout",
+        meta: { project: "biology" },
+        component: () => import("@/components/Sidebar/SidebarBiologyAbout.vue"),
       },
       {
         path: "/chemistry",
         name: "chemistry",
+        meta: { project: "chemistry" },
+        component: () =>
+          import("@/components/Sidebar/SidebarSubprojectChemistry.vue"),
+      },
+      {
+        path: "/chemistry/samples",
+        name: "chemistrySamples",
+        meta: { project: "chemistry" },
         component: () => import("@/components/Sidebar/SidebarChemisty.vue"),
+      },
+      {
+        path: "/chemistry/about",
+        name: "chemistryAbout",
+        meta: { project: "chemistry" },
+        component: () =>
+          import("@/components/Sidebar/SidebarChemistryAbout.vue"),
       },
       {
         path: "/about",

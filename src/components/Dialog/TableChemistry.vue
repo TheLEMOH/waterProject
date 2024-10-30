@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import chemistry from "@/dictonary/chemistry";
 import useItems from "./composables/chemistryItems";
 import { Feature } from "ol";
-import { computed } from "vue";
+import { computed, inject } from "vue";
 
 const props = withDefaults(
   defineProps<{ selectedPointOnMap: Feature | null }>(),
@@ -11,10 +10,12 @@ const props = withDefaults(
   }
 );
 
+const { indicators } = inject<any>("indicator");
+
 const { items } = useItems(props);
 
 const headers = computed(() => {
-  const res = [];
+  const res: Array<{}> = [];
 
   res.push({
     title: "Год",
@@ -24,9 +25,14 @@ const headers = computed(() => {
     fixed: false,
   });
 
-  for (let i in chemistry) {
-    res.push({ title: chemistry[i], value: i, sortable: true, width: "50px" });
-  }
+  indicators.value.forEach((indicator: string) => {
+    res.push({
+      title: indicator,
+      value: indicator,
+      sortable: true,
+      width: "50px",
+    });
+  });
 
   return res;
 });

@@ -1,6 +1,6 @@
 import { ComputedRef, ref, watch } from "vue";
 
-export default function useYear(nameRoute: ComputedRef<string | symbol>) {
+export default function useYear(nameRoute: ComputedRef<{}>) {
   const selectedYear = ref<number>(2010);
 
   watch(nameRoute, () => {

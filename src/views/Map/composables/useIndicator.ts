@@ -5,10 +5,17 @@ interface List {
 }
 
 export default function useData(datasets: any, nameRoute: ComputedRef) {
-  const selectedIndicator = ref<string | null>("qualityType");
+  const selectedIndicator = ref<string | null>(
+    nameRoute.value == "chemistry" ? "УКИЗВ" : "IP"
+  );
 
   const indicatorsChemisry: Indicators = Object.keys(datasets[0][0].data[2010]);
   const indicatorsBiology: Indicators = Object.keys(datasets[1][0].data);
+
+  indicatorsBiology.pop();
+
+  const index = indicatorsBiology.length - 1;
+  indicatorsBiology.splice(0, 0, indicatorsBiology.splice(index, 1)[0]);
 
   const list: List = {
     chemistry: indicatorsChemisry,
@@ -19,11 +26,11 @@ export default function useData(datasets: any, nameRoute: ComputedRef) {
 
   watch(nameRoute, (value) => {
     if (value == "biology") {
-      selectedIndicator.value = "H";
+      selectedIndicator.value = "IP";
     }
 
     if (value == "chemistry") {
-      selectedIndicator.value = "qualityType";
+      selectedIndicator.value = "УКИЗВ";
     }
   });
 

@@ -7,7 +7,6 @@ const drawer = ref<boolean>(true);
   <v-fab
     :icon="drawer ? 'mdi-chevron-right' : 'mdi-chevron-left'"
     location="top end"
-    variant="plain"
     absolute
     @click="drawer = !drawer"
   ></v-fab>

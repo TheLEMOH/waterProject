@@ -14,7 +14,7 @@ const degree: Degree = {
 </script>
 
 <template>
-  <div class="legend">
+  <div class="legend-biology">
     <div
       class="legend-item elevation-2"
       v-for="[item, key] in groupBiology"
@@ -29,10 +29,10 @@ const degree: Degree = {
 </template>
 
 <style>
-.legend {
+.legend-biology {
   position: absolute;
-  bottom: 55px;
-  left: 1rem;
+  bottom: 6px;
+  left: 6px;
   z-index: 100;
   display: flex;
   flex-direction: column;

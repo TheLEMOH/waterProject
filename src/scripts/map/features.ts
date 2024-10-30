@@ -1,7 +1,7 @@
 import Feature from "ol/Feature.js";
 import Point from "ol/geom/Point.js";
 import { fromLonLat } from "ol/proj";
-import { Style, Fill, Circle, Text } from "ol/style.js";
+import { Style, Fill, Circle, Text, Stroke } from "ol/style.js";
 import group from "@/types/group";
 import groupBiology from "@/types/groupBiology";
 
@@ -24,7 +24,7 @@ export const CreateFeaturesChemystry = ({
   const copy = JSON.parse(JSON.stringify(items));
 
   const features = copy.map((item: chemistryPoint) => {
-    const qualityType = item.data[year].qualityType || "1";
+    const qualityType = item.data[year].УКИЗВ || "1";
 
     const value = item.data[year][indicator] || 0;
 
@@ -32,7 +32,7 @@ export const CreateFeaturesChemystry = ({
 
     let radius = 20;
 
-    if (indicator == "qualityType") {
+    if (indicator == "УКИЗВ") {
       color = group.get(qualityType.toString()) || "#000";
     } else {
       radius = 20 + 3 * +value * 0.5;
@@ -42,8 +42,14 @@ export const CreateFeaturesChemystry = ({
       color: color,
     });
 
+    const stroke = new Stroke({
+      color: "#000",
+      width: 2,
+    });
+
     const image = new Circle({
       fill,
+      stroke,
       radius,
     });
 
@@ -80,8 +86,8 @@ export const CreateFeaturesBiology = ({
 }: FeatureBiologyProps) => {
   const copy = JSON.parse(JSON.stringify(items));
 
-  const features = copy.map((item: chemistryPoint) => {
-    const qualityType = item.data.qualityType || "1";
+  const features = copy.map((item: biologyPoint) => {
+    const qualityType = item.data["Категория качества вод"] || "1";
 
     const value = item.data[indicator] || 0;
 
@@ -89,7 +95,7 @@ export const CreateFeaturesBiology = ({
 
     let radius = 20;
 
-    if (indicator == "qualityType" || indicator == "ip") {
+    if (indicator == "IP") {
       color = groupBiology.get(qualityType.toString()) || "#000";
     } else {
       radius = 20 + 1 * +value * 0.1;
@@ -99,8 +105,14 @@ export const CreateFeaturesBiology = ({
       color: color,
     });
 
+    const stroke = new Stroke({
+      color: "#000",
+      width: 2,
+    });
+
     const image = new Circle({
       fill,
+      stroke,
       radius,
     });
 

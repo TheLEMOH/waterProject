@@ -6,7 +6,7 @@ interface Props {
   group: Map<string, string> | null;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   degree: null,
   group: null,
 });

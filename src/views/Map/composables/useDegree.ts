@@ -1,5 +1,5 @@
 import Degree from "@/types/degree";
-import { computed, ComputedRef, ref, watch } from "vue";
+import { ComputedRef, ref, watch } from "vue";
 
 export default function useDegree(nameRoute: ComputedRef) {
   const degreeChemistry: Degree = {

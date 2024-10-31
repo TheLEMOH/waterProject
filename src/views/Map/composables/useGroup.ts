@@ -1,5 +1,5 @@
-import { groupChemistry, groupBiology, Group } from "@/types/group";
-import { computed, ComputedRef, ref, watch } from "vue";
+import { groupChemistry, groupBiology } from "@/types/group";
+import { ComputedRef, ref, watch } from "vue";
 
 export default function useGroup(nameRoute: ComputedRef) {
   const selectedGroup = ref<Map<string, string> | null>(

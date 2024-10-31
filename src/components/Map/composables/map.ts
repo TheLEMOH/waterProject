@@ -8,7 +8,7 @@ import VectorSource from "ol/source/Vector";
 
 import { ComputedRef, inject, onMounted, ref, watch } from "vue";
 
-import { MapBrowserEvent } from "ol";
+import { Feature, MapBrowserEvent, Overlay } from "ol";
 
 export default function useMap(settings: { target: string }) {
   const { selectedPoint } = inject<any>("selectedPoint");
@@ -43,24 +43,78 @@ export default function useMap(settings: { target: string }) {
   });
 
   onMounted(() => {
+    const popup = document.getElementById("mapPopup");
+    const content = document.getElementById("mapPopupContent");
+    const closer = document.getElementById("closer");
+
+    const overlay = new Overlay({
+      element: popup!,
+      positioning: "center-left",
+    });
+
     map.value = new Map({
       target: settings.target,
+      overlays: [overlay],
       layers: [osm, ...layers],
       view: view,
     });
 
     map.value.on("click", (event: MapBrowserEvent<UIEvent>) => {
-      const features = map.value.getFeaturesAtPixel(event.pixel, {
-        hitTolerance: 2,
-      });
+      if (nameRoute.value == "chemistry") {
+        const features = map.value.getFeaturesAtPixel(event.pixel, {
+          hitTolerance: 2,
+        });
 
-      const feature = features[0];
+        const feature = features[0];
 
-      if (feature) {
-        selectedPointOnMap.value = feature;
-        dialog.value = true;
+        if (feature) {
+          selectedPointOnMap.value = feature;
+          dialog.value = true;
+        }
+      }
+
+      if (nameRoute.value == "biology") {
+        const { pixel } = event;
+        const feature = map.value.forEachFeatureAtPixel(pixel, (f: Feature) => {
+          if (f) return f;
+          else return null;
+        });
+
+        if (feature) {
+          const coordinate = feature.getGeometry().getCoordinates();
+          const data = feature.get("data");
+          const radius = feature.get("radius") + 10;
+
+          delete data["Категория качества вод"];
+
+          const keys = Object.keys(data);
+
+          const index = keys.length - 1;
+          keys.splice(0, 0, keys.splice(index, 1)[0]);
+
+          let html = "";
+
+          html += "<ul>";
+
+          keys.forEach((key) => {
+            html += `<li>${key}: <b>${data[key]}</b></li>`;
+          });
+
+          html += "</ul>";
+
+          content!.innerHTML = html;
+          overlay.setOffset([radius, 0]);
+          overlay.setPosition(coordinate);
+        } else {
+          overlay.setPosition(undefined);
+        }
       }
     });
+
+    closer!.onclick = () => {
+      overlay.setPosition(undefined);
+      return false;
+    };
 
     watch(selectedPoint, (value) => {
       view.animate({

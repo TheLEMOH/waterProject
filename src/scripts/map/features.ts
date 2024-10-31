@@ -119,6 +119,7 @@ export const CreateFeaturesBiology = ({
     const iconFeature = new Feature({
       geometry: new Point(fromLonLat(item.position)),
       data: item.data,
+      radius: radius,
       name: item.samplingLocation,
       zIndex: Math.round(+value),
     });
@@ -133,6 +134,37 @@ export const CreateFeaturesBiology = ({
       text,
       zIndex: Math.round(+value),
     });
+
+   /*  const stylePosition = new Style({
+      text: new Text({
+        text: "1234567",
+        offsetY: +radius + 10,
+      }),
+      stroke: new Stroke({
+        color: "#000",
+      }),
+      fill: new Fill({
+        color: "#000",
+      }),
+    }); */
+
+    /*   const styleFunc = (feature: any) => {
+      return [
+        new Style({
+          text: new Text({
+            text: "1234567",
+            offsetY: +radius + 10,
+          }),
+          stroke: new Stroke({
+            color: "#000",
+          }),
+          fill: new Fill({
+            color: "#000",
+          }),
+        }),
+        style,
+      ];
+    }; */
 
     iconFeature.setStyle(style);
 

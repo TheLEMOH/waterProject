@@ -1,34 +1,33 @@
 <script setup lang="ts">
-import group from "@/types/group";
+import Degree from "@/types/degree";
 
-export interface Degree {
-  [key: string]: string;
+interface Props {
+  degree: Degree | null;
+  group: Map<string, string> | null;
 }
 
-const degree: Degree = {
-  "1": "условно чистая",
-  "2": "слабо загрязненная",
-  "3": "загрязненная",
-  "3а": "загрязненная",
-  "3б": "очень загрязненная",
-  "4": "грязная",
-  "4а": "грязная",
-  "4в": "грязная",
-};
+const props = withDefaults(defineProps<Props>(), {
+  degree: null,
+  group: null,
+});
 </script>
 
 <template>
   <div class="legend-chemistry">
-    <div
-      class="legend-item elevation-2"
-      v-for="[item, key] in group"
-      :title="item"
-      :key="key"
-    >
-      {{ item }} -
-      {{ degree[item] }}
-      <div class="legend-item-color" :style="{ background: key }"></div>
-    </div>
+    <template v-if="degree && group">
+      <div
+        class="legend-item elevation-2"
+        v-for="[item, key] in group"
+        :title="item"
+        :key="item"
+      >
+        <span>
+          {{ item }} -
+          {{ degree[item] }}
+        </span>
+        <div class="legend-item-color" :style="{ background: key }"></div>
+      </div>
+    </template>
   </div>
 </template>
 

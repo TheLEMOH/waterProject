@@ -13,6 +13,7 @@ declare module 'vue' {
     IndicatorMenu: typeof import('./src/components/Indicator/IndicatorMenu.vue')['default']
     Legend: typeof import('./src/components/Legend/Legend.vue')['default']
     LegendBiology: typeof import('./src/components/Legend/LegendBiology.vue')['default']
+    LegendChemisty: typeof import('./src/components/Legend/LegendChemisty.vue')['default']
     Map: typeof import('./src/components/Map/Map.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -42,7 +42,7 @@ const test = (e: any): void => {
 </script>
 
 <template>
-  <SidebarPage :title="'Биология'">
+  <SidebarPage :title="'Контрольные створы'">
     <template #body>
       <p class="pl-4 pt-1 opacity-80">Краткое описание</p>
       <v-divider> </v-divider>

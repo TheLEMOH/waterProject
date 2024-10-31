@@ -2,8 +2,7 @@ import Feature from "ol/Feature.js";
 import Point from "ol/geom/Point.js";
 import { fromLonLat } from "ol/proj";
 import { Style, Fill, Circle, Text, Stroke } from "ol/style.js";
-import group from "@/types/group";
-import groupBiology from "@/types/groupBiology";
+import { groupBiology, groupChemistry } from "@/types/group";
 
 interface FeatureChemistryProps {
   items: chemistryArray;
@@ -33,7 +32,7 @@ export const CreateFeaturesChemystry = ({
     let radius = 20;
 
     if (indicator == "УКИЗВ") {
-      color = group.get(qualityType.toString()) || "#000";
+      color = groupChemistry.get(qualityType.toString()) || "#000";
     } else {
       radius = 20 + 3 * +value * 0.5;
     }
@@ -135,7 +134,7 @@ export const CreateFeaturesBiology = ({
       zIndex: Math.round(+value),
     });
 
-   /*  const stylePosition = new Style({
+    /*  const stylePosition = new Style({
       text: new Text({
         text: "1234567",
         offsetY: +radius + 10,

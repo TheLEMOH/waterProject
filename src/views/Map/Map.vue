@@ -6,7 +6,6 @@ import IndicatorMenu from "@/components/Indicator/IndicatorMenu.vue";
 import Layers from "@/scripts/map/map";
 
 import Legend from "@/components/Legend/Legend.vue";
-import LegendBiology from "@/components/Legend/LegendBiology.vue";
 import chemistry from "@/datasets/db_c.json";
 import biology from "@/datasets/db_b.json";
 
@@ -20,10 +19,14 @@ import useIndicators from "@/views/Map/composables/useIndicator";
 import usePoint from "@/views/Map/composables/usePoint";
 import useYear from "./composables/useYear";
 import useNameRoute from "./composables/useNameRoute";
+import useDegree from "./composables/useDegree";
+import useGroup from "./composables/useGroup";
 
 const { nameRoute } = useNameRoute();
 const { selectedPoint, setSelectedPoint } = usePoint();
 const { selectedYear } = useYear(nameRoute);
+const { selectedDegree } = useDegree(nameRoute);
+const { selectedGroup } = useGroup(nameRoute);
 const { indicators, list, selectedIndicator } = useIndicators(
   [chemistry, biology],
   nameRoute
@@ -54,17 +57,13 @@ provide<ComputedRef<string | symbol>>("nameRoute", nameRoute);
 <template>
   <Transition name="fade" mode="out-in">
     <Legend
-      v-if="selectedIndicator == 'УКИЗВ' && nameRoute == 'chemistry'"
-    ></Legend>
-  </Transition>
-
-  <Transition name="fade" mode="out-in">
-    <LegendBiology
+      :degree="selectedDegree"
+      :group="selectedGroup"
       v-if="
-        (selectedIndicator == 'IP' || selectedIndicator == 'qualityType') &&
-        nameRoute == 'biology'
+        (selectedIndicator == 'IP' || selectedIndicator == 'УКИЗВ') &&
+        (nameRoute == 'chemistry' || nameRoute == 'biology')
       "
-    ></LegendBiology>
+    ></Legend>
   </Transition>
 
   <Transition name="fade" mode="out-in">

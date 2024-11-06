@@ -65,5 +65,6 @@ const { dialog, selectedPointOnMap, closeDialog } = useMap({
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+  border-bottom: 2px dotted #ddd;
 }
 </style>

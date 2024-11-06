@@ -27,28 +27,33 @@ const { selectedPoint, setSelectedPoint } = usePoint();
 const { selectedYear } = useYear(nameRoute);
 const { selectedDegree } = useDegree(nameRoute);
 const { selectedGroup } = useGroup(nameRoute);
-const { indicators, list, selectedIndicator } = useIndicators(
+const { indicators, selectedIndicator, indicatorsHtml } = useIndicators(
   [chemistry, biology],
   nameRoute
 );
-
 const LayerModuleChemistry = new Layers({ generator: CreateLayersChemistry });
 const LayerModuleBiology = new Layers({ generator: CreateLayersBiology });
 
-const layersChemistry = LayerModuleChemistry.CreateLayers<chemistryArray>({
+const layerChemistry = LayerModuleChemistry.CreateLayers<chemistryArray>({
   dataset: chemistry,
-  indicators: list["chemistry"],
 });
 
-const layersBiologi = LayerModuleBiology.CreateLayers<biologyArray>({
+const layerBiologi = LayerModuleBiology.CreateLayers<biologyArray>({
   dataset: biology,
-  indicators: list["biology"],
 });
 
-const layers = [...layersChemistry, ...layersBiologi];
+if (nameRoute.value == "chemistry") {
+  layerChemistry.setVisible(true);
+}
+
+if (nameRoute.value == "biology") {
+  layerBiologi.setVisible(true);
+}
+
+const layers = [layerChemistry, layerBiologi];
 
 provide("selectedPoint", { selectedPoint, setSelectedPoint });
-provide("indicator", { indicators, selectedIndicator });
+provide("indicator", { indicators, selectedIndicator, indicatorsHtml });
 provide("year", { selectedYear });
 provide("layers", layers);
 provide<ComputedRef<string | symbol>>("nameRoute", nameRoute);
@@ -79,6 +84,7 @@ provide<ComputedRef<string | symbol>>("nameRoute", nameRoute);
       :indicators="indicators"
       :selectedProject="nameRoute"
       :selectedIndicator="selectedIndicator"
+      :indicators-html="indicatorsHtml"
       @select="selectedIndicator = $event"
       v-if="indicators"
     ></IndicatorMenu>

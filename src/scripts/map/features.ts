@@ -23,9 +23,9 @@ export const CreateFeaturesChemystry = ({
   const copy = JSON.parse(JSON.stringify(items));
 
   const features = copy.map((item: chemistryPoint) => {
-    const qualityType = item.data[year].УКИЗВ || "1";
+    const qualityType = item.data[2010].УКИЗВ || "1";
 
-    const value = item.data[year][indicator] || 0;
+    const value = item.data[2010][indicator] || 0;
 
     let color = "#EFA94A";
 
@@ -84,7 +84,6 @@ export const CreateFeaturesBiology = ({
   indicator,
 }: FeatureBiologyProps) => {
   const copy = JSON.parse(JSON.stringify(items));
-
   const features = copy.map((item: biologyPoint) => {
     const qualityType = item.data["Категория качества вод"] || "1";
 

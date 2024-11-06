@@ -1,5 +1,9 @@
 import { computed, ComputedRef, ref, watch } from "vue";
-
+import {
+  indicatorChemistryHTML,
+  indicatorBiologyHTML,
+  IndicatorHtml,
+} from "@/types/indicatorHTML";
 interface List {
   [key: string | symbol]: Indicators;
 }
@@ -7,6 +11,12 @@ interface List {
 export default function useData(datasets: any, nameRoute: ComputedRef) {
   const selectedIndicator = ref<string | null>(
     nameRoute.value == "chemistry" ? "УКИЗВ" : "IP"
+  );
+
+  const indicatorsHtml = ref<IndicatorHtml | null>(
+    nameRoute.value == "chemistry"
+      ? indicatorChemistryHTML
+      : indicatorBiologyHTML
   );
 
   const indicatorsChemisry: Indicators = Object.keys(datasets[0][0].data[2010]);
@@ -27,12 +37,14 @@ export default function useData(datasets: any, nameRoute: ComputedRef) {
   watch(nameRoute, (value) => {
     if (value == "biology") {
       selectedIndicator.value = "IP";
+      indicatorsHtml.value = indicatorBiologyHTML;
     }
 
     if (value == "chemistry") {
       selectedIndicator.value = "УКИЗВ";
+      indicatorsHtml.value = indicatorChemistryHTML;
     }
   });
 
-  return { selectedIndicator, list, indicators };
+  return { selectedIndicator, list, indicators, indicatorsHtml };
 }

@@ -20,16 +20,14 @@ export default class BaseClassLayer<T> {
 
   CreateLayer({
     items,
-    year,
-    indicator,
     name,
+    indicator,
   }: {
     items: T;
-    year: number;
-    indicator: string;
     name: string;
+    indicator: string;
   }) {
-    const features = this.CreateFeatures({ items, year, indicator });
+    const features = this.CreateFeatures({ items, indicator });
     const source = this.CreateSource(features);
 
     const vectorLayer = new VectorLayer({
@@ -38,8 +36,6 @@ export default class BaseClassLayer<T> {
       source: source,
     });
 
-    vectorLayer.set("year", year);
-    vectorLayer.set("indicator", indicator);
     vectorLayer.set("name", name);
 
     return vectorLayer;

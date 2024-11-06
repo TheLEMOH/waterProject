@@ -3,7 +3,6 @@ import Chart from "../Chart/Chart.vue";
 import lineLayout from "@/scripts/chart/lineLayout";
 import { ref, ComputedRef, inject } from "vue";
 import TableChemistry from "./TableChemistry.vue";
-import TableBiology from "./TableBiology.vue";
 import useItems from "./composables/chemistryItems";
 import useIndicators from "./composables/indicators";
 
@@ -23,12 +22,8 @@ const { items } = useItems(props);
 const { indicators } = useIndicators(items);
 const { series } = useSeries({ items, selectedIndicator });
 
-const tables: { [key: string | symbol]: any } = {
-  chemistry: TableChemistry,
-  biology: TableBiology,
-};
-
 const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
+const { indicatorsHtml } = inject<any>("indicator");
 </script>
 
 <template>
@@ -47,10 +42,8 @@ const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
       <v-list subheader>
         <v-list-subheader>Табличные данные</v-list-subheader>
 
-        <component
-          :is="tables[nameRoute]"
-          :selectedPointOnMap="selectedPointOnMap"
-        ></component>
+        <TableChemistry :selectedPointOnMap="selectedPointOnMap">
+        </TableChemistry>
 
         <template v-if="nameRoute == 'chemistry'">
           <v-list-subheader>График</v-list-subheader>
@@ -64,6 +57,13 @@ const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
               :item-title="'label'"
               style="max-width: 350px"
             >
+              <template v-slot:item="{ props, item }">
+                <div
+                  class="select-item"
+                  v-bind="props"
+                  v-html="indicatorsHtml[item.value]"
+                ></div>
+              </template>
             </v-select>
           </div>
 
@@ -79,6 +79,15 @@ const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.select-item {
+  padding: 0.5rem 0 0.5rem 1rem;
+}
+
+.select-item:hover {
+  background: rgba(200, 200, 200, 0.5);
+  cursor: pointer;
 }
 
 th {

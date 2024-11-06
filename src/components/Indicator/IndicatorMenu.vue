@@ -1,14 +1,18 @@
 <script setup lang="ts">
+import { IndicatorHtml } from "@/types/indicatorHTML";
+
 interface Props {
   indicators?: Indicators | null;
   selectedProject?: string | symbol;
   selectedIndicator?: string | null;
+  indicatorsHtml?: IndicatorHtml | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   indicators: null,
   selectedProject: "chemistry",
   selectedIndicator: null,
+  indicatorsHtml: null,
 });
 
 const emits = defineEmits(["select"]);
@@ -26,7 +30,7 @@ const color = (indicator: string, index: number) => {
 </script>
 
 <template>
-  <div class="indicator-menu">
+  <div class="indicator-menu" v-if="indicatorsHtml">
     <div class="indicator-item" v-for="(indicator, index) in props.indicators">
       <v-btn
         block
@@ -37,7 +41,7 @@ const color = (indicator: string, index: number) => {
         :color="color(indicator, index)"
         @click="emits('select', indicator)"
       >
-        {{ indicator }}
+        <span v-html="indicatorsHtml[indicator]"></span>
       </v-btn>
     </div>
   </div>

@@ -9,10 +9,11 @@ import VectorSource from "ol/source/Vector";
 import { ComputedRef, inject, onMounted, ref, watch } from "vue";
 
 import { Feature, MapBrowserEvent, Overlay } from "ol";
+import { styleBiology, styleChemistry } from "@/scripts/map/style";
 
 export default function useMap(settings: { target: string }) {
   const { selectedPoint } = inject<any>("selectedPoint");
-  const { selectedIndicator } = inject<any>("indicator");
+  const { selectedIndicator, indicatorsHtml } = inject<any>("indicator");
   const { selectedYear } = inject<any>("year");
   const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
 
@@ -97,7 +98,7 @@ export default function useMap(settings: { target: string }) {
           html += "<ul>";
 
           keys.forEach((key) => {
-            html += `<li>${key}: <b>${data[key]}</b></li>`;
+            html += `<li><span>${indicatorsHtml.value[key]}</span> <b>${data[key]}</b></li>`;
           });
 
           html += "</ul>";
@@ -125,45 +126,63 @@ export default function useMap(settings: { target: string }) {
     });
 
     watch(nameRoute, (value: ComputedRef<string | symbol>) => {
-      layers.forEach((element) => {
-        if (
-          element.get("name") == value &&
-          element.get("year") == selectedYear.value &&
-          element.get("indicator") == selectedIndicator.value
-        ) {
-          element.setVisible(true);
+      layers.forEach((layer) => {
+        if (layer.get("name") == value) {
+          layer.setVisible(true);
         } else {
-          element.setVisible(false);
+          layer.setVisible(false);
         }
       });
     });
 
     watch(selectedYear, (value: string) => {
-      layers.forEach((element) => {
-        if (
-          element.get("year") == value &&
-          element.get("name") == nameRoute.value &&
-          element.get("indicator") == selectedIndicator.value
-        ) {
-          element.setVisible(true);
-        } else {
-          element.setVisible(false);
-        }
-      });
+      const filtered = layers.find(
+        (element) => element.get("name") == nameRoute.value
+      );
+
+      if (filtered) {
+        const features = filtered.getSource()?.getFeatures();
+
+        features?.forEach((feature: Feature) => {
+          const style = styleChemistry({
+            feature,
+            indicator: selectedIndicator.value,
+            year: +value,
+          });
+          feature.setStyle(style);
+        });
+      }
     });
 
     watch(selectedIndicator, (value: string) => {
-      layers.forEach((element) => {
-        if (
-          element.get("year") == selectedYear.value &&
-          element.get("name") == nameRoute.value &&
-          element.get("indicator") == value
-        ) {
-          element.setVisible(true);
-        } else {
-          element.setVisible(false);
+      const filtered = layers.find(
+        (element) => element.get("name") == nameRoute.value
+      );
+
+      if (filtered) {
+        const features = filtered.getSource()?.getFeatures();
+
+        if (nameRoute.value == "chemistry") {
+          features?.forEach((feature: Feature) => {
+            const style = styleChemistry({
+              feature,
+              indicator: value,
+              year: selectedYear.value,
+            });
+            feature.setStyle(style);
+          });
         }
-      });
+
+        if (nameRoute.value == "biology") {
+          features?.forEach((feature: Feature) => {
+            const style = styleBiology({
+              feature,
+              indicator: value,
+            });
+            feature.setStyle(style);
+          });
+        }
+      }
     });
   });
 

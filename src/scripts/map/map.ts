@@ -1,6 +1,5 @@
 interface Props<T> {
   dataset: T;
-  indicators: Indicators;
 }
 
 class Layers {
@@ -10,8 +9,8 @@ class Layers {
     this.CreateLayer = settings.generator;
   }
 
-  CreateLayers<T>({ dataset, indicators }: Props<T>) {
-    return this.CreateLayer({ dataset, indicators });
+  CreateLayers<T>({ dataset }: Props<T>) {
+    return this.CreateLayer({ dataset });
   }
 }
 

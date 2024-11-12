@@ -40,7 +40,7 @@ const color = (indicator: string, index: number) => {
   </div>
 </template>
 
-<style module>
+<style>
 .indicator-menu {
   width: 140px;
   height: auto;

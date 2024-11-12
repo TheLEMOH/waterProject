@@ -1,4 +1,4 @@
-import { computed, ComputedRef } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 export default function useNameRoute() {

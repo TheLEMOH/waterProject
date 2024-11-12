@@ -49,20 +49,10 @@ const { indicatorsHtml } = inject<any>("indicator");
           <v-list-subheader>График</v-list-subheader>
 
           <div class="chart-settings">
-            <v-select
-              label="Выберите показатель"
-              v-model="selectedIndicator"
-              :items="indicators"
-              :item-value="'value'"
-              :item-title="'label'"
-              style="max-width: 350px"
-            >
+            <v-select label="Выберите показатель" v-model="selectedIndicator" :items="indicators" :item-value="'value'"
+              :item-title="'label'" style="max-width: 350px">
               <template v-slot:item="{ props, item }">
-                <div
-                  class="select-item"
-                  v-bind="props"
-                  v-html="indicatorsHtml[item.value]"
-                ></div>
+                <div class="select-item" v-bind="props" v-html="indicatorsHtml[item.value]"></div>
               </template>
             </v-select>
           </div>

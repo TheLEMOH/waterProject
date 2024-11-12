@@ -32,22 +32,15 @@ const color = (indicator: string, index: number) => {
 <template>
   <div class="indicator-menu" v-if="indicatorsHtml">
     <div class="indicator-item" v-for="(indicator, index) in props.indicators">
-      <v-btn
-        block
-        class="text-subtitle-2"
-        :ripple="false"
-        size="small"
-        :key="indicator"
-        :color="color(indicator, index)"
-        @click="emits('select', indicator)"
-      >
+      <v-btn block class="text-subtitle-2" :ripple="false" size="small" :key="indicator"
+        :color="color(indicator, index)" @click="emits('select', indicator)">
         <span v-html="indicatorsHtml[indicator]"></span>
       </v-btn>
     </div>
   </div>
 </template>
 
-<style>
+<style module>
 .indicator-menu {
   width: 140px;
   height: auto;

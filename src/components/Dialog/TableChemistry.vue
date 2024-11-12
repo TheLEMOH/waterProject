@@ -41,23 +41,13 @@ const headers = computed(() => {
 </script>
 
 <template>
-  <v-data-table
-    :density="'compact'"
-    :headers="headers"
-    :items="items"
-    hide-default-footer
-    :items-per-page="100"
-    style="padding: 0 6px 0 6px"
-  >
+  <v-data-table :density="'compact'" :headers="headers" :items="items" hide-default-footer :items-per-page="100"
+    style="padding: 0 6px 0 6px">
     <template v-slot:headers="{ columns, isSorted, getSortIcon, toggleSort }">
       <tr>
         <template v-for="column in columns" :key="column.key">
           <th>
-            <span
-              class="mr-2 cursor-pointer"
-              @click="() => toggleSort(column)"
-              v-html="column.title"
-            >
+            <span class="mr-2 cursor-pointer" @click="() => toggleSort(column)" v-html="column.title">
             </span>
             <template v-if="isSorted(column)">
               <v-icon :icon="getSortIcon(column)"></v-icon>

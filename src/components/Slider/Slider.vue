@@ -51,25 +51,13 @@ const device = computed(() => {
 <template>
   <div class="slider-wrapper" ref="sliderWrap">
     <div class="text-subtitle-2">Многолетняя динамика</div>
-    <v-slider
-      :value="props.selectedYear"
-      style="width: 100%"
-      thumb-color="indigo-darken-1"
-      track-color="indigo-darken-1"
-      track-fill-color="indigo-darken-4"
-      :min="2010"
-      :max="2022"
-      :ticks="ticks"
-      tick-size="5"
-      :show-ticks="'always'"
-      :step="1"
-      hide-details
-      @update:model-value="emits('update', $event)"
-    >
+    <v-slider :value="props.selectedYear" style="width: 100%" thumb-color="indigo-darken-1"
+      track-color="indigo-darken-1" track-fill-color="indigo-darken-4" :min="2010" :max="2022" :ticks="ticks"
+      tick-size="5" :show-ticks="'always'" :step="1" hide-details @update:model-value="emits('update', $event)">
       <template #tick-label="{ tick }">
-        <span v-if="+tick.label! % 2 == 0 && device=='mobile'">{{
-          tick.label
-        }}</span>
+        <span v-if="+tick.label! % 2 == 0 && device == 'mobile'">
+          {{ tick.label }}
+        </span>
         <span v-if="device == 'computer'">{{ tick.label }}</span>
       </template>
     </v-slider>

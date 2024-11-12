@@ -6,8 +6,6 @@ interface dataChemistry {
   [key: string]: year;
 }
 
-/* type Data = Record<string, year>; */
-
 interface chemistryPoint {
   id: string | number;
   samplingLocation: string;
@@ -16,4 +14,4 @@ interface chemistryPoint {
   data: dataChemistry;
 }
 
-interface chemistryArray extends Array<chemistryPoint> {}
+interface chemistryArray extends Array<chemistryPoint> { }

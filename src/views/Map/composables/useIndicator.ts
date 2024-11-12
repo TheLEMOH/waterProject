@@ -4,16 +4,17 @@ import {
   indicatorBiologyHTML,
   IndicatorHtml,
 } from "@/types/indicatorHTML";
+
 interface List {
   [key: string | symbol]: Indicators;
 }
 
 export default function useData(datasets: any, nameRoute: ComputedRef) {
-  const selectedIndicator = ref<string | null>(
+  const selectedIndicator = ref<string>(
     nameRoute.value == "chemistry" ? "УКИЗВ" : "IP"
   );
 
-  const indicatorsHtml = ref<IndicatorHtml | null>(
+  const indicatorsHtml = ref<IndicatorHtml>(
     nameRoute.value == "chemistry"
       ? indicatorChemistryHTML
       : indicatorBiologyHTML

@@ -21,6 +21,8 @@ import useYear from "./composables/useYear";
 import useNameRoute from "./composables/useNameRoute";
 import useDegree from "./composables/useDegree";
 import useGroup from "./composables/useGroup";
+import { ProvideIndicator, ProvideSelectedPoint, ProvideYear } from "@/types/provides";
+import VectorLayer from "ol/layer/Vector";
 
 const { nameRoute } = useNameRoute();
 const { selectedPoint, setSelectedPoint } = usePoint();
@@ -52,42 +54,29 @@ if (nameRoute.value == "biology") {
 
 const layers = [layerChemistry, layerBiologi];
 
-provide("selectedPoint", { selectedPoint, setSelectedPoint });
-provide("indicator", { indicators, selectedIndicator, indicatorsHtml });
-provide("year", { selectedYear });
-provide("layers", layers);
+provide<ProvideSelectedPoint>("selectedPoint", { selectedPoint, setSelectedPoint });
+provide<ProvideIndicator>("indicator", { indicators, selectedIndicator, indicatorsHtml });
+provide<ProvideYear>("year", { selectedYear });
+provide<VectorLayer[]>("layers", layers);
 provide<ComputedRef<string | symbol>>("nameRoute", nameRoute);
 </script>
 
 <template>
   <Transition name="fade" mode="out-in">
-    <Legend
-      :degree="selectedDegree"
-      :group="selectedGroup"
-      v-if="
-        (selectedIndicator == 'IP' || selectedIndicator == 'УКИЗВ') &&
-        (nameRoute == 'chemistry' || nameRoute == 'biology')
-      "
-    ></Legend>
+    <Legend :degree="selectedDegree" :group="selectedGroup" v-if="
+      (selectedIndicator == 'IP' || selectedIndicator == 'УКИЗВ') &&
+      (nameRoute == 'chemistry' || nameRoute == 'biology')
+    "></Legend>
   </Transition>
 
   <Transition name="fade" mode="out-in">
-    <Slider
-      :selectedYear="selectedYear"
-      @update="selectedYear = $event"
-      v-if="indicators && nameRoute == 'chemistry'"
-    ></Slider>
+    <Slider :selectedYear="selectedYear" @update="selectedYear = $event" v-if="indicators && nameRoute == 'chemistry'">
+    </Slider>
   </Transition>
 
   <Transition name="fade" mode="out-in">
-    <IndicatorMenu
-      :indicators="indicators"
-      :selectedProject="nameRoute"
-      :selectedIndicator="selectedIndicator"
-      :indicators-html="indicatorsHtml"
-      @select="selectedIndicator = $event"
-      v-if="indicators"
-    ></IndicatorMenu>
+    <IndicatorMenu :indicators="indicators" :selectedProject="nameRoute" :selectedIndicator="selectedIndicator"
+      :indicators-html="indicatorsHtml" @select="selectedIndicator = $event" v-if="indicators"></IndicatorMenu>
   </Transition>
 
   <Sidebar></Sidebar>

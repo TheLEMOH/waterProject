@@ -4,31 +4,21 @@ import TileLayer from "ol/layer/Tile.js";
 import View from "ol/View.js";
 import { fromLonLat } from "ol/proj";
 import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
 
 import { ComputedRef, inject, onMounted, ref, watch } from "vue";
 
 import { Feature, MapBrowserEvent, Overlay } from "ol";
 import { styleBiology, styleChemistry } from "@/scripts/map/style";
+import { ProvideIndicator, ProvideSelectedPoint, ProvideYear } from "@/types/provides";
 
 export default function useMap(settings: { target: string }) {
-  const { selectedPoint } = inject<any>("selectedPoint");
-  const { selectedIndicator, indicatorsHtml } = inject<any>("indicator");
-  const { selectedYear } = inject<any>("year");
+  const { selectedPoint } = inject<ProvideSelectedPoint>("selectedPoint")!;
+  const { selectedIndicator, indicatorsHtml } = inject<ProvideIndicator>("indicator")!;
+  const { selectedYear } = inject<ProvideYear>("year")!;
   const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
 
-  const layers: VectorLayer<VectorSource<never>, never>[] =
-    inject<any>("layers");
-
-  layers.forEach((element) => {
-    if (
-      element.get("name") == nameRoute.value &&
-      element.get("year") == selectedYear.value &&
-      element.get("indicator") == selectedIndicator.value
-    ) {
-      element.setVisible(true);
-    }
-  });
+  const layers: VectorLayer[] =
+    inject<VectorLayer[]>("layers")!;
 
   const map = ref();
   const dialog = ref(false);
@@ -98,7 +88,7 @@ export default function useMap(settings: { target: string }) {
           html += "<ul>";
 
           keys.forEach((key) => {
-            html += `<li><span>${indicatorsHtml.value[key]}</span> <b>${data[key]}</b></li>`;
+            html += `<li><span>${indicatorsHtml.value![key]}</span> <b>${data[key]}</b></li>`;
           });
 
           html += "</ul>";
@@ -119,7 +109,7 @@ export default function useMap(settings: { target: string }) {
 
     watch(selectedPoint, (value) => {
       view.animate({
-        center: fromLonLat(value.position),
+        center: fromLonLat(value!.position),
         zoom: 15,
         duration: 1000,
       });
@@ -135,7 +125,7 @@ export default function useMap(settings: { target: string }) {
       });
     });
 
-    watch(selectedYear, (value: string) => {
+    watch(selectedYear, (value: number) => {
       const filtered = layers.find(
         (element) => element.get("name") == nameRoute.value
       );

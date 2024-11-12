@@ -31,13 +31,7 @@ const headers = computed(() => {
 </script>
 
 <template>
-  <v-data-table
-    :density="'compact'"
-    :headers="headers"
-    :items="items"
-    hide-default-footer
-    :items-per-page="100"
-    style="padding: 0 6px 0 6px"
-  >
+  <v-data-table :density="'compact'" :headers="headers" :items="items" hide-default-footer :items-per-page="100"
+    style="padding: 0 6px 0 6px">
   </v-data-table>
 </template>

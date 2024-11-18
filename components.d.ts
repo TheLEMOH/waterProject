@@ -8,6 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Chart: typeof import('./src/components/Chart/Chart.vue')['default']
+    DialogAbout: typeof import('./src/components/Dialog/DialogAbout.vue')['default']
+    DialogAboutBiology: typeof import('./src/components/Dialog/DialogAboutBiology.vue')['default']
+    DialogAboutChemistry: typeof import('./src/components/Dialog/DialogAboutChemistry.vue')['default']
     DialogMap: typeof import('./src/components/Dialog/DialogMap.vue')['default']
     Header: typeof import('./src/components/Header/Header.vue')['default']
     IndicatorMenu: typeof import('./src/components/Indicator/IndicatorMenu.vue')['default']

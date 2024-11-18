@@ -13,6 +13,13 @@ const routes = [
         path: "",
         name: "menu",
         component: () => import("@/components/Sidebar/SidebarMenu.vue"),
+        children: [
+          {
+            path: "/about",
+            name: "about",
+            component: () => import("@/components/Dialog/DialogAbout.vue"),
+          },
+        ]
       },
       {
         path: "/biology",
@@ -20,6 +27,13 @@ const routes = [
         meta: { project: "biology" },
         component: () =>
           import("@/components/Sidebar/SidebarSubProjectBiology.vue"),
+        children: [
+          {
+            path: "/biology/about",
+            name: "biologyAbout",
+            component: () => import("@/components/Dialog/DialogAboutBiology.vue"),
+          },
+        ]
       },
       {
         path: "/biology/samples",
@@ -28,17 +42,18 @@ const routes = [
         component: () => import("@/components/Sidebar/SidebarBiology.vue"),
       },
       {
-        path: "/biology/about",
-        name: "biologyAbout",
-        meta: { project: "biology" },
-        component: () => import("@/components/Sidebar/SidebarBiologyAbout.vue"),
-      },
-      {
         path: "/chemistry",
         name: "chemistry",
         meta: { project: "chemistry" },
         component: () =>
           import("@/components/Sidebar/SidebarSubprojectChemistry.vue"),
+        children: [
+          {
+            path: "/chemistry/about",
+            name: "chemistryAbout",
+            component: () => import("@/components/Dialog/DialogAboutChemistry.vue"),
+          },
+        ]
       },
       {
         path: "/chemistry/samples",
@@ -46,20 +61,9 @@ const routes = [
         meta: { project: "chemistry" },
         component: () => import("@/components/Sidebar/SidebarChemisty.vue"),
       },
-      {
-        path: "/chemistry/about",
-        name: "chemistryAbout",
-        meta: { project: "chemistry" },
-        component: () =>
-          import("@/components/Sidebar/SidebarChemistryAbout.vue"),
-      },
-      {
-        path: "/about",
-        name: "about",
-        component: () => import("@/components/Sidebar/SidebarAbout.vue"),
-      },
     ],
   },
+
 ];
 
 const router = createRouter({

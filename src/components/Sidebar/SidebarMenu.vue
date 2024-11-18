@@ -33,6 +33,8 @@ const click = (name: string) => {
           </template>
         </v-list-item>
       </v-list>
+
+      <router-view></router-view>
     </template>
   </SidebarPage>
 </template>

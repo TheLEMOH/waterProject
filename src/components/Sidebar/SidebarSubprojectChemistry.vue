@@ -10,7 +10,7 @@ const click = (name: string) => {
 </script>
 
 <template>
-  <SidebarPage :title="'Химия'">
+  <SidebarPage :title="'Химия'" :redirect-name="'menu'">
     <template #body>
       <p class="pl-4 pt-1 opacity-80">
         Все данные на карте указаны в долях ПДК
@@ -29,6 +29,8 @@ const click = (name: string) => {
           </template>
         </v-list-item>
       </v-list>
+
+      <router-view></router-view>
     </template>
   </SidebarPage>
 </template>

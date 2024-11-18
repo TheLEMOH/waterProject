@@ -6,15 +6,17 @@ const router = useRouter();
 interface Props {
   title?: string | null;
   showClose?: boolean;
+  redirectName?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: null,
   showClose: true,
+  redirectName: "menu",
 });
 
 const back = () => {
-  router.back();
+  router.push({ name: props.redirectName });
 };
 </script>
 

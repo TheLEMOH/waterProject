@@ -1,11 +1,29 @@
-<script setup lang="ts">
-import SidebarPage from "./SidebarPage.vue";
+<script setup lang="js">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const dialog = ref(true)
+
+const router = useRouter()
+
+const close = () =>{
+    dialog.value = false
+}
+
+const back = ()=>{
+  router.push({name:'menu'})
+}
 </script>
 
 <template>
-  <SidebarPage :title="'О проекте'">
-    <template #body>
-      <div class="pa-2">
+  <v-dialog v-model="dialog" fullscreen @after-leave="back">
+    <v-card>
+      <v-toolbar>
+        <v-toolbar-title> О проекте </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon="mdi-close" @click="close"></v-btn>
+      </v-toolbar>
+      <div class="pa-5">
         <p>
           Енисей – главная водная артерия Сибири – входит в число семи крупных
           рек мира и является наиболее полноводной рекой нашей страны. В
@@ -66,6 +84,14 @@ import SidebarPage from "./SidebarPage.vue";
           университета науки и технологий имени академика М.Ф. Решетнева.
         </p>
       </div>
-    </template>
-  </SidebarPage>
+    </v-card>
+  </v-dialog>
 </template>
+
+<style scoped>
+p {
+  text-align: justify;
+  text-indent: 1rem;
+  line-height: 30px;
+}
+</style>

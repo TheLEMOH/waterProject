@@ -46,7 +46,9 @@ const back = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-wrap: balance;
   padding: 8px;
+  font-size: 14px;
 }
 
 .sidebar-divider {

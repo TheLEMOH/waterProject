@@ -10,9 +10,6 @@ const { setSelectedPoint } = inject<any>("selectedPoint");
 <template>
   <SidebarPage :title="'Контрольные створы'" :redirect-name="'chemistry'">
     <template #body>
-      <p class="pl-4 pt-1 opacity-80">Краткое описание</p>
-      <v-divider> </v-divider>
-
       <v-list lines="three">
         <v-list-item
           v-for="(item, index) in datasetChemistry"

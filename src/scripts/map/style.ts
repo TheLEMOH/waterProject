@@ -5,6 +5,7 @@ import { Feature } from "ol";
 interface StyleChemistryProps {
   feature: Feature;
   year: number;
+  index: number;
   indicator: string;
   radius?: number;
   color?: string;
@@ -13,12 +14,14 @@ interface StyleChemistryProps {
 interface StyleBiologyProps {
   feature: Feature;
   indicator: string;
+  index: number;
   radius?: number;
   color?: string;
 }
 
 export const styleBiology = ({
   feature,
+  index,
   indicator,
   radius = 20,
   color = "#EFA94A",
@@ -40,12 +43,13 @@ export const styleBiology = ({
       radius,
     }),
     text: new Text({ text: value.toString(), font: "1rem Helvetica" }),
-    zIndex: Math.round(+value),
+    zIndex: index,
   });
 };
 
 export const styleChemistry = ({
   feature,
+  index,
   year,
   indicator,
   radius = 20,
@@ -68,6 +72,6 @@ export const styleChemistry = ({
       radius,
     }),
     text: new Text({ text: value.toString(), font: "1rem Helvetica" }),
-    zIndex: Math.round(+value),
+    zIndex: index,
   });
 };

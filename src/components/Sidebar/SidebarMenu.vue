@@ -10,7 +10,7 @@ const click = (name: string) => {
 </script>
 
 <template>
-  <SidebarPage :title="'Водные ресурсы'" :show-close="false">
+  <SidebarPage :title="'ГИС «Комплексная оценка качества вод р. Енисей»'" :show-close="false">
     <template #body>
       <v-list>
         <v-list-item value="about" @click="click('about')">

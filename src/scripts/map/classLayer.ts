@@ -31,7 +31,6 @@ export default class BaseClassLayer<T> {
     const source = this.CreateSource(features);
 
     const vectorLayer = new VectorLayer({
-      declutter: true,
       visible: false,
       source: source,
     });

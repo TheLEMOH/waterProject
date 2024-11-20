@@ -44,8 +44,6 @@ const test = (e: any): void => {
 <template>
   <SidebarPage :title="'Контрольные створы'" :redirect-name="'biology'">
     <template #body>
-      <p class="pl-4 pt-1 opacity-80">Краткое описание</p>
-      <v-divider> </v-divider>
       <v-list :items="listItems" item-props @click:select="test"> </v-list>
     </template>
   </SidebarPage>

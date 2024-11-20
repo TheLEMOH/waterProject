@@ -22,7 +22,7 @@ export const CreateFeaturesChemystry = ({
 }: FeatureChemistryProps) => {
   const copy = JSON.parse(JSON.stringify(items));
 
-  const features = copy.map((item: chemistryPoint) => {
+  const features = copy.map((item: chemistryPoint, index: number) => {
     const qualityType = item.data[2010].УКИЗВ || "1";
 
     const value = item.data[2010][indicator] || 0;
@@ -57,7 +57,7 @@ export const CreateFeaturesChemystry = ({
       data: item.data,
       year: year,
       name: item.samplingLocation,
-      zIndex: Math.round(+value),
+
     });
 
     const text = new Text({
@@ -68,7 +68,7 @@ export const CreateFeaturesChemystry = ({
     const style = new Style({
       image,
       text,
-      zIndex: Math.round(+value),
+      zIndex: index,
     });
 
     iconFeature.setStyle(style);
@@ -84,7 +84,7 @@ export const CreateFeaturesBiology = ({
   indicator,
 }: FeatureBiologyProps) => {
   const copy = JSON.parse(JSON.stringify(items));
-  const features = copy.map((item: biologyPoint) => {
+  const features = copy.map((item: biologyPoint, index: number) => {
     const qualityType = item.data["Категория качества вод"] || "1";
 
     const value = item.data[indicator] || 0;
@@ -119,18 +119,20 @@ export const CreateFeaturesBiology = ({
       data: item.data,
       radius: radius,
       name: item.samplingLocation,
-      zIndex: Math.round(+value),
+      declutter: false
     });
 
     const text = new Text({
       text: value.toString(),
       font: "1rem Helvetica",
+      declutterMode: 'obstacle',
+      overflow: true
     });
 
     const style = new Style({
       image,
       text,
-      zIndex: Math.round(+value),
+      zIndex: index,
     });
 
     iconFeature.setStyle(style);

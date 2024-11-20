@@ -133,9 +133,11 @@ export default function useMap(settings: { target: string }) {
       if (filtered) {
         const features = filtered.getSource()?.getFeatures();
 
-        features?.forEach((feature: Feature) => {
+        features?.forEach((feature: Feature, index: number) => {
+
           const style = styleChemistry({
             feature,
+            index,
             indicator: selectedIndicator.value,
             year: +value,
           });
@@ -153,9 +155,10 @@ export default function useMap(settings: { target: string }) {
         const features = filtered.getSource()?.getFeatures();
 
         if (nameRoute.value == "chemistry") {
-          features?.forEach((feature: Feature) => {
+          features?.forEach((feature: Feature, index: number) => {
             const style = styleChemistry({
               feature,
+              index,
               indicator: value,
               year: selectedYear.value,
             });
@@ -164,9 +167,10 @@ export default function useMap(settings: { target: string }) {
         }
 
         if (nameRoute.value == "biology") {
-          features?.forEach((feature: Feature) => {
+          features?.forEach((feature: Feature, index: number) => {
             const style = styleBiology({
               feature,
+              index,
               indicator: value,
             });
             feature.setStyle(style);

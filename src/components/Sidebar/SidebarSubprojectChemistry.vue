@@ -10,7 +10,10 @@ const click = (name: string) => {
 </script>
 
 <template>
-  <SidebarPage :title="'Химия'" :redirect-name="'menu'">
+  <SidebarPage
+    :title="'Качество вод р. Енисей по гидрохимическим показателям'"
+    :redirect-name="'menu'"
+  >
     <template #body>
       <p class="pl-4 pt-1 opacity-80">
         Все данные на карте указаны в долях ПДК
@@ -18,14 +21,14 @@ const click = (name: string) => {
       <p class="pl-4 pb-1 opacity-80">(Кроме УКИЗВ)</p>
       <v-divider> </v-divider>
       <v-list>
+        <v-list-item value="about" @click="click('chemistryAbout')">
+          <template #title>
+            <span class="my-list-item"> Описание раздела </span>
+          </template>
+        </v-list-item>
         <v-list-item value="samples" @click="click('chemistrySamples')">
           <template #title>
             <span class="my-list-item"> Контрольные створы </span>
-          </template>
-        </v-list-item>
-        <v-list-item value="about" @click="click('chemistryAbout')">
-          <template #title>
-            <span class="my-list-item"> Описание проекта </span>
           </template>
         </v-list-item>
       </v-list>

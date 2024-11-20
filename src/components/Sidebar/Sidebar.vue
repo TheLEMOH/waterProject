@@ -16,7 +16,7 @@ const drawer = ref<boolean>(true);
     v-model="drawer"
     location="right"
     :elevation="5"
-    :width="400"
+    :width="430"
     :mobile="false"
   >
     <router-view v-slot="{ Component }">

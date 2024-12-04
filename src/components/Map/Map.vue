@@ -16,22 +16,13 @@ const { dialog, selectedPointOnMap, closeDialog } = useMap({
   <div class="map-popup elevation-4" id="mapPopup">
     <div class="map-popup-header" id="mapPopupHeader">
       <h3>Показатели</h3>
-      <v-btn
-        id="closer"
-        icon="mdi-close"
-        :density="'compact'"
-        :variant="'plain'"
-      ></v-btn>
+      <v-btn id="closer" icon="mdi-close" :density="'compact'" :variant="'plain'"></v-btn>
     </div>
     <v-divider></v-divider>
     <div class="map-popup-content" id="mapPopupContent"></div>
   </div>
 
-  <DialogMap
-    :dialog="dialog"
-    :selectedPointOnMap="selectedPointOnMap"
-    @close-dialog="closeDialog"
-  ></DialogMap>
+  <DialogMap :dialog="dialog" :selectedPointOnMap="selectedPointOnMap" @close-dialog="closeDialog"></DialogMap>
 </template>
 
 <style>

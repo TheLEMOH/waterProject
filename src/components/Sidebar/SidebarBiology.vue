@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import SidebarPage from "./SidebarPage.vue";
-import datasetBiology from "../../datasets/db_b.json";
+import datasetBiology from "@/datasets/db_b.json";
 
 import { inject } from "vue";
+import { ProvideSelectedPoint } from "@/types/provides";
 
-const { setSelectedPoint } = inject<any>("selectedPoint");
+const { setSelectedPoint } = inject<ProvideSelectedPoint>("selectedPoint")!;
 
 const sections = new Set(datasetBiology.map((item) => item.section));
 

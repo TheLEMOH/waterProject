@@ -1,4 +1,4 @@
-<script setup lang="js">
+<script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -6,12 +6,12 @@ const dialog = ref(true)
 
 const router = useRouter()
 
-const close = () =>{
-    dialog.value = false
+const close = () => {
+  dialog.value = false
 }
 
-const back = ()=>{
-  router.push({name:'menu'})
+const back = () => {
+  router.push({ name: 'menu' })
 }
 </script>
 

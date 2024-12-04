@@ -24,14 +24,7 @@ const back = () => {
   <div class="sidebar">
     <div class="sidebar-header">
       <h1 class="pa-2">{{ props.title }}</h1>
-      <v-btn
-        rounded
-        density="comfortable"
-        :elevation="0"
-        @click="back()"
-        icon="mdi-close"
-        v-if="props.showClose"
-      >
+      <v-btn rounded density="comfortable" :elevation="0" @click="back()" icon="mdi-close" v-if="props.showClose">
       </v-btn>
     </div>
 

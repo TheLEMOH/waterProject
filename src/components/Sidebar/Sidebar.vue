@@ -5,20 +5,11 @@ const drawer = ref<boolean>(true);
 </script>
 
 <template>
-  <v-fab
-    :icon="drawer ? 'mdi-chevron-right' : 'mdi-chevron-left'"
-    location="top end"
-    absolute
-    @click="drawer = !drawer"
-  ></v-fab>
+  <v-fab :icon="drawer ? 'mdi-chevron-right' : 'mdi-chevron-left'" location="top end" absolute
+    @click="drawer = !drawer">
+  </v-fab>
 
-  <v-navigation-drawer
-    v-model="drawer"
-    location="right"
-    :elevation="5"
-    :width="430"
-    :mobile="false"
-  >
+  <v-navigation-drawer v-model="drawer" location="right" :elevation="5" :width="430" :mobile="false">
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" />

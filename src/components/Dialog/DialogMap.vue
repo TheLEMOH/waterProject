@@ -8,6 +8,7 @@ import useIndicators from "./composables/indicators";
 
 import { Props } from "./types/props";
 import useSeries from "./composables/series";
+import { ProvideIndicator } from "@/types/provides";
 
 const props = withDefaults(defineProps<Props>(), {
   dialog: false,
@@ -23,7 +24,7 @@ const { indicators } = useIndicators(items);
 const { series } = useSeries({ items, selectedIndicator });
 
 const nameRoute = inject<ComputedRef<string | symbol>>("nameRoute")!;
-const { indicatorsHtml } = inject<any>("indicator");
+const { indicatorsHtml } = inject<ProvideIndicator>("indicator")!;
 </script>
 
 <template>

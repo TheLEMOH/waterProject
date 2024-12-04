@@ -10,10 +10,7 @@ const click = (name: string) => {
 </script>
 
 <template>
-  <SidebarPage
-    :title="'Качество вод р. Енисей по гидробиологическим показателям'"
-    :redirect-name="'menu'"
-  >
+  <SidebarPage :title="'Качество вод р. Енисей по гидробиологическим показателям'" :redirect-name="'menu'">
     <template #body>
       <v-list>
         <v-list-item value="about" @click="click('biologyAbout')">
@@ -27,7 +24,6 @@ const click = (name: string) => {
           </template>
         </v-list-item>
       </v-list>
-
       <router-view></router-view>
     </template>
   </SidebarPage>

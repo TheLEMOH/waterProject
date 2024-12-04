@@ -3,20 +3,17 @@ import SidebarPage from "./SidebarPage.vue";
 import datasetChemistry from "../../datasets/db_c.json";
 
 import { inject } from "vue";
+import { ProvideSelectedPoint } from "@/types/provides";
 
-const { setSelectedPoint } = inject<any>("selectedPoint");
+const { setSelectedPoint } = inject<ProvideSelectedPoint>("selectedPoint")!;
 </script>
 
 <template>
   <SidebarPage :title="'Контрольные створы'" :redirect-name="'chemistry'">
     <template #body>
       <v-list lines="three">
-        <v-list-item
-          v-for="(item, index) in datasetChemistry"
-          :title="`${index + 1}) ${item.samplingLocation}`"
-          :value="item.id"
-          @click="setSelectedPoint(item)"
-        >
+        <v-list-item v-for="(item, index) in datasetChemistry" :title="`${index + 1}) ${item.samplingLocation}`"
+          :value="item.id" @click="setSelectedPoint(item)">
           <v-list-item-subtitle>
             {{ item.description }}
           </v-list-item-subtitle>

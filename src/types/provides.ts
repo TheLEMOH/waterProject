@@ -9,7 +9,7 @@ export interface ProvideSelectedPoint {
 export interface ProvideIndicator {
     selectedIndicator: Ref<string>
     indicators: ComputedRef<Indicators>,
-    indicatorsHtml: Ref<IndicatorHtml | null>
+    indicatorsHtml: Ref<IndicatorHtml>
 }
 
 export interface ProvideYear { selectedYear: Ref<number> }

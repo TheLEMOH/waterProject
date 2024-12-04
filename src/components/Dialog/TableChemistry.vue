@@ -5,9 +5,7 @@ import { computed, inject } from "vue";
 
 const props = withDefaults(
   defineProps<{ selectedPointOnMap: Feature | null }>(),
-  {
-    selectedPointOnMap: null,
-  }
+  { selectedPointOnMap: null, }
 );
 
 const { indicators } = inject<any>("indicator");

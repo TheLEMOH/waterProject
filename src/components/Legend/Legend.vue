@@ -15,12 +15,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <div class="legend-chemistry">
     <template v-if="degree && group">
-      <div
-        class="legend-item elevation-2"
-        v-for="[item, key] in group"
-        :title="item"
-        :key="item"
-      >
+      <div class="legend-item elevation-2" v-for="[item, key] in group" :title="item" :key="item">
         <span>
           {{ item }} -
           {{ degree[item] }}
